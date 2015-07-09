@@ -1,3 +1,6 @@
 *direnv
-*db.sqlite3
-*.idea
+*db.sqlite3 
+.idea/
+
+*__pycache__/
+
