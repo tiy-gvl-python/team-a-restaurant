@@ -4,3 +4,4 @@
 + make direnv
 + requirments
 + .git ignore
++ make project
