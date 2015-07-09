@@ -35,9 +35,14 @@ class Category(models.Model):
     def __str__(self):
         return "{}-{}-{}".format(self.items, self.name, self.timestamp)
 
+class Menu(models.Model):
+    categories = models.ManyToManyField(Category)
+    display = models.BooleanField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+    name = models.CharField(max_length=30)
 
-
-
+    def __str__(self):
+        return "{} - {} - {}".format(self.categories, self.display, self.name)
 
 
 
