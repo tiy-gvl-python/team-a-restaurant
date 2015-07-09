@@ -35,8 +35,17 @@ class Category(models.Model):
     def __str__(self):
         return "{}-{}-{}".format(self.items, self.name, self.timestamp)
 
+class CommonUser(models.Model):
+    user = models.OneToOneField(User)
 
+class Owner(CommonUser):
+    pass
 
+class Staff(CommonUser):
+    pass
+
+class Customer(CommonUser):
+    pass
 
 
 
