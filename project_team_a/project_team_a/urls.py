@@ -21,3 +21,6 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^', include('restaurant_app.urls', namespace='restaurant_app')),
 ]
+
+
+# admin url must be on top
