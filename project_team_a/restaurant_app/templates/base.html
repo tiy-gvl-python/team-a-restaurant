@@ -23,7 +23,9 @@
     <li role="presentation" class="active"><a href="/">Home</a></li>
     <li role="presentation" class="active"><a href="{% url 'restaurant_app:item_form' %}">Create Item</a></li>
     <li role="presentation" class="active"><a href="{% url 'restaurant_app:item_list' %}">List Item</a></li>
-    </ul></div>
+    <li role="presentation" class="active"><a href="{% url 'restaurant_app:category_form' %}">Add Category</a></li>
+    <li role="presentation" class="active"><a href="{% url 'restaurant_app:category_list' %}">Categories</a></li>
+</ul></div>
 
 {% block body %}
 {% endblock %}

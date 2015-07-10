@@ -1,5 +1,6 @@
 from django.conf.urls import include, url
-from .views import home, ItemCreateView, ItemDeleteView, ItemListView, ItemDetailView, ItemUpdateView
+from .views import home, ItemCreateView, ItemDeleteView, ItemListView, ItemDetailView, ItemUpdateView, CategoryListView, \
+    CategoryCreateView, CategoryDeleteView, CategoryUpdateView
 
 
 urlpatterns = [
@@ -9,8 +10,10 @@ urlpatterns = [
     url(r'^delete_item/(?P<pk>\d+)$', ItemDeleteView.as_view(), name="delete_item"),
     url(r'^item_detail/(?P<pk>\d+)$', ItemDetailView.as_view(), name="item_detail"),
     url(r'^item_update/(?P<pk>\d+)$', ItemUpdateView.as_view(), name="item_update"),
+    url(r'^category_list/', CategoryListView.as_view(template="category_list.html"), name="category_list"),
+    url(r'^category_form/', CategoryCreateView.as_view(), name="category_form"),
+    url(r'^delete_category/(?P<pk>\d+)$', CategoryDeleteView.as_view(), name="delete_category"),
+    url(r'^update_category/(?P<pk>\d+)$', CategoryUpdateView.as_view(), name="update_category"),
     url(r'^', home, name="home"),
-
-
 
 ]
