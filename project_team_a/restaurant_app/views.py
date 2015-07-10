@@ -13,7 +13,7 @@ class ItemListView(ListView):
 
 class ItemCreateView(CreateView):
     model = Item
-    fields = ['name', 'price']
+    fields = ['name', 'price', 'description']
     success_url = reverse_lazy('restaurant_app:item_form')
 
 
@@ -23,4 +23,10 @@ class ItemDeleteView(DeleteView):
 
 class ItemDetailView(DetailView):
     model = Item
-    template = "item_detail.html"
+    success_url = reverse_lazy('restaurant_app:item_form')
+
+class ItemUpdateView(UpdateView):
+    model = Item
+    fields = ['name', 'price', 'description']
+    template = "item_update"
+    success_url = reverse_lazy('restaurant_app:item_list')

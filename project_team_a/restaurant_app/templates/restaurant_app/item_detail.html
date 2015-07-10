@@ -5,8 +5,7 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
-
-</head>
+ </head>
 <body>
 
 {% block body %}
@@ -14,7 +13,7 @@
     <h1>List Items</h1>
 {% for item in object_list %}
     <div>{{ item.name }} {{item.price}} {{item.id}}
-    ###<form method="POST" action="{% url 'restaurant_app:item_detail' item.id %}">
+    <form method="POST" action="{% url 'restaurant_app:item_detail' item.id %}">
         {% csrf_token %}
         <button type="submit">Delete</button>
 </form>

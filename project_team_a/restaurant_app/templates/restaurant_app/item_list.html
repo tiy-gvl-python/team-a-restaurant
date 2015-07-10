@@ -13,13 +13,21 @@
 
     <h1>List Items</h1>
 {% for item in object_list %}
-    <div>{{ item.name }} {{item.price}} {{item.id}}
+    <div>{{ item.name }} {{item.price}} {{item.description}} {{item.update}}
     <form method="POST" action="{% url 'restaurant_app:delete_item' item.id %}">
         {% csrf_token %}
         <button type="submit">Delete</button>
-</form>
+    </form>
+    <form method="get" action="{% url 'restaurant_app:item_update' item.id %}">
+        {% csrf_token %}
+        <button type="submit">Edit</button>
+    </form>
     {% endfor %}
-</div>
+
+
+
+
+    </div>
 
 {% endblock %}
 </body>
