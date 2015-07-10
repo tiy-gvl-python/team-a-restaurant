@@ -1,9 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import User
+from phonenumber_field.modelfields import PhoneNumberField
+# from django.core.validators import RegexValidator
 
 class Order(models.Model):
     items = models.ManyToManyField('Item')
-    user = models.ForeignKey('Customer')
+    user = models.ForeignKey('Profile')
     timestamp = models.DateTimeField(auto_now_add=True)
     completed = models.BooleanField()
     submit = models.BooleanField()
@@ -37,30 +39,18 @@ class Category(models.Model):
 
 
 # make Order.user = models.OneToOne(CommonUser) need to change later
-class CommonUser(models.Model):
+class Profile(models.Model):
     user = models.OneToOneField(User, null=True)
-    phone_number = models.CharField()
+    phone = PhoneNumberField(blank=False)
+    staff = models.BooleanField(default=False)
+    customer = models.BooleanField(default=False)
+    owner = models.BooleanField(default=False)
+
     class Meta:
-        abstract = True
+        ordering = ['user']
+        verbose_name = 'user'
+        verbose_name_plural = 'users'
 
-
-class Owner(CommonUser):
-    restaurant = models.CharField(max_length=50)
-    is_owner = models.BooleanField(default=True)
-    status = models.CharField(max_length=6, default='Owner')
-
-    def __str__(self):
-        return "Status: {}, Restaurant: {},  Is owner".format(self.status, self.restaurant)
-
-
-class Staff(CommonUser):
-    restaurant = models.CharField(max_length=50)
-    job_title = models.CharField(max_length=20)
-    is_staff = models.BooleanField(default=False)
-    status = models.CharField(max_length=6, default='Staff')
-
-    def __str__(self):
-        return '{}'.format(self.restaurant, self.job_title)
 
 
 

@@ -5,5 +5,5 @@ django-extensions==1.5.5
 fake-factory==0.5.1
 ipython==3.1.0
 Werkzeug==0.10.4
-
+django-phonenumber-field
 
