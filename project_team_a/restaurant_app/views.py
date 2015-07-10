@@ -88,3 +88,23 @@ class CategoryUpdateView(UpdateView):
     template = "update_category.html"
     success_url = reverse_lazy('restaurant_app:category_list')
 
+class MenuListView(ListView):
+    model = Menu
+    template = "menu_list.html"
+
+class MenuCreateView(CreateView):
+    model = Menu
+    fields = ['categories', 'display', 'name']
+    success_url = reverse_lazy('restaurant_app:menu_form')
+
+class MenuDeleteView(DeleteView):
+    model = Menu
+    success_url = reverse_lazy('restaurant_app:menu_list')
+
+class MenuUpdateView(UpdateView):
+    model = Menu
+    fields = ['categories', 'display', 'name']
+    template = "update_menu.html"
+    success_url = reverse_lazy('restaurant_app:menu_list')
+
+

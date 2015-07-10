@@ -1,6 +1,6 @@
 from django.conf.urls import include, url
-from restaurant_app.views import home, menuactchoice, menu, ItemCreateView, ItemDeleteView, ItemListView, ItemDetailView, ItemUpdateView, CategoryListView, \
-    CategoryCreateView, CategoryDeleteView, CategoryUpdateView
+from .views import home, menuactchoice, menu, ItemCreateView, ItemDeleteView, ItemListView, ItemDetailView, ItemUpdateView, CategoryListView, \
+    CategoryCreateView, CategoryDeleteView, CategoryUpdateView, MenuListView, MenuCreateView, MenuDeleteView, MenuUpdateView
 
 urlpatterns = [
 
@@ -15,5 +15,9 @@ urlpatterns = [
     url(r'^category_form/', CategoryCreateView.as_view(), name="category_form"),
     url(r'^delete_category/(?P<pk>\d+)$', CategoryDeleteView.as_view(), name="delete_category"),
     url(r'^update_category/(?P<pk>\d+)$', CategoryUpdateView.as_view(), name="update_category"),
+    url(r'^menu_list/', MenuListView.as_view(template="menu_list.html"), name="menu_list"),
+    url(r'^menu_form/', MenuCreateView.as_view(), name="menu_form"),
+    url(r'^delete_menu/(?P<pk>\d+)$', MenuDeleteView.as_view(), name="delete_menu"),
+    url(r'^update_menu/(?P<pk>\d+)$', MenuUpdateView.as_view(), name="update_menu"),
     url(r'^', home, name="home"),
 ]
