@@ -14,9 +14,9 @@ class ItemListView(ListView):
 class ItemCreateView(CreateView):
     model = Item
     fields = ['name', 'price']
-    success_url = reverse_lazy('/item_list')
+    success_url = reverse_lazy('restaurant_app:item_list')
 
 
 class ItemDeleteView(DeleteView):
     model = Item
-    success_url = '/item_list/'
+    success_url = reverse_lazy('restaurant_app:item_list')
