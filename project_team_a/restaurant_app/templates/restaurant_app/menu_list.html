@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+
+</head>
+<body>
+
+{% block body %}
+
+    <h1>Menu List</h1>
+{% for menu in object_list %}
+    <div>{{ menu.name }} {{menu.categories}} {{menu.display}}
+    <form method="POST" action="{% url 'restaurant_app:delete_menu' menu.id %}">
+        {% csrf_token %}
+        <button type="submit">Delete Menu</button>
+    </form>
+    <form method="get" action="{% url 'restaurant_app:update_menu' menu.id %}">
+        {% csrf_token %}
+        <button type="submit">Edit Menu</button>
+    </form>
+    {% endfor %}
+
+    </div>
+
+{% endblock %}
+</body>
+
+</html>
