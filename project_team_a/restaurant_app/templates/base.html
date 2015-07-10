@@ -20,10 +20,9 @@
 </head>
 <div class="container" align="center">
 <ul class="nav nav-pills" style="align:center;">
-    <li role="presentation" class="active"><a href="{% url home %}">Home</a></li>
-    <li role="presentation" class="active"><a href="{% url menu %}">Menu</a></li>
+    <li role="presentation" class="active"><a href="{% url 'restaurant_app:home' %}">Home</a></li>
+    <li role="presentation" class="active"><a href="{% url 'restaurant_app:menuactlist' %}">Menu</a></li>
     </ul></div>
-
 {% block body %}
 {% endblock %}
 

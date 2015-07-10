@@ -1,21 +1,19 @@
 {% extends 'base.html' %}
-
 <!DOCTYPE html>
 <html>
 <head lang="en">
     <meta charset="UTF-8">
     <title>Menu</title>
-<div class="container" align="center">
-<ul class="nav nav-pills" style="align:center;">
-    {% for menu in menus %}
-    <li role="presentation" class="active"><a href="{% url 'restaurant_app:home' %}">{{ menu.name }}</a></li>
-    </ul></div>
 </head>
-
 {% block body %}
 <body>
     <h1>Menu</h1>
-
+<div class="container" align="center">
+<ul class="nav nav-pills" style="align:center;">
+    {% for menu in menus %}
+    <li role="presentation" class="active"><a href="{% url 'restaurant_app:menu' menu.id 0 %}">{{ menu.name }}</li></a>
+    {% endfor %}
+    </ul></div>
 </body>
 {% endblock %}
 </html>
