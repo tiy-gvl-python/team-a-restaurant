@@ -1,5 +1,4 @@
 from django.shortcuts import render, render_to_response
-from restaurant_app.models import Menu, Category, Item
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView
 from .models import Item, Category, Menu
@@ -88,3 +87,4 @@ class CategoryUpdateView(UpdateView):
     fields = ['name', 'items']
     template = "update_category.html"
     success_url = reverse_lazy('restaurant_app:category_list')
+
