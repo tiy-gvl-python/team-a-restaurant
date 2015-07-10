@@ -35,17 +35,41 @@ class Category(models.Model):
     def __str__(self):
         return "{}-{}-{}".format(self.items, self.name, self.timestamp)
 
+
+# make Order.user = models.OneToOne(CommonUser) need to change later
 class CommonUser(models.Model):
     user = models.OneToOneField(User)
 
+    class Meta:
+        abstract = True
+
+
 class Owner(CommonUser):
-    pass
+    restaurant = models.CharField(max_length=50)
+    is_owner = models.BooleanField(default=True)
+    status = models.CharField(max_length=6, default='Owner')
+
+    def __str__(self):
+        return "Status: {}, Restaurant: {},  Is owner".format(self.status, self.restaurant)
+
 
 class Staff(CommonUser):
-    pass
+    restaurant = models.CharField(max_length=50)
+    job_title = models.CharField(max_length=20)
+    is_staff = models.BooleanField(default=False)
+    status = models.CharField(max_length=6, default='Staff')
+
+    def __str__(self):
+        return '{}'.format(self.restaurant, self.job_title)
+
 
 class Customer(CommonUser):
-    pass
+    is_customer = models.BooleanField(default=True)
+    status = models.CharField(max_length=10,default='Customer')
+
+    def __str__(self):
+        return 'Status: {} is customer'.format(self.status)
+
 
 
 
