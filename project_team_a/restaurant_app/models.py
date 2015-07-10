@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 class Order(models.Model):
     items = models.ManyToManyField('Item')
-    user = models.ForeignKey(User)
+    user = models.ForeignKey('Customer')
     timestamp = models.DateTimeField(auto_now_add=True)
     completed = models.BooleanField()
     submit = models.BooleanField()
@@ -38,8 +38,8 @@ class Category(models.Model):
 
 # make Order.user = models.OneToOne(CommonUser) need to change later
 class CommonUser(models.Model):
-    user = models.OneToOneField(User)
-
+    user = models.OneToOneField(User, null=True)
+    phone_number = models.CharField()
     class Meta:
         abstract = True
 
@@ -63,12 +63,7 @@ class Staff(CommonUser):
         return '{}'.format(self.restaurant, self.job_title)
 
 
-class Customer(CommonUser):
-    is_customer = models.BooleanField(default=True)
-    status = models.CharField(max_length=10,default='Customer')
 
-    def __str__(self):
-        return 'Status: {} is customer'.format(self.status)
 
 
 
