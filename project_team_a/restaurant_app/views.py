@@ -1,6 +1,6 @@
 from django.shortcuts import render, render_to_response
 from django.core.urlresolvers import reverse_lazy, reverse
-from django.views.generic import ListView, CreateView, DeleteView, UpdateView
+from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView
 from .models import Item
 
 def home(requests):
@@ -14,9 +14,13 @@ class ItemListView(ListView):
 class ItemCreateView(CreateView):
     model = Item
     fields = ['name', 'price']
-    success_url = reverse_lazy('restaurant_app:item_list')
+    success_url = reverse_lazy('restaurant_app:item_form')
 
 
 class ItemDeleteView(DeleteView):
     model = Item
     success_url = reverse_lazy('restaurant_app:item_list')
+
+class ItemDetailView(DetailView):
+    model = Item
+    template = "item_detail.html"
