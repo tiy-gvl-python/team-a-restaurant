@@ -4,7 +4,7 @@ from restaurant_app.views import home, menuactchoice, menu
 urlpatterns = [
 
     url(r'^menuactlist', menuactchoice, name="menuactlist"),
-    url(r'^me/(?P<id>\d+)nu(?P<cid>\d+)/', menu, name="menu"),
+    url(r'^me/(?P<id>\d+)nu/', menu, name="menu"),
     url(r'^', home, name="home"),
 
 

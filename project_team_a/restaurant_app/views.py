@@ -15,18 +15,32 @@ def menuactchoice(requests):
     return render_to_response("menuchoice.html", context)
 
 
-def menu(requests, id, cid):
+def menu(requests, id):
     context = {}
-    if int(cid):
-        catedisplay = Category.objects.get(id=cid)
-        catedisplay = catedisplay.items.all()
-        print(catedisplay)
-        context["catedisplay"] = catedisplay
+    categories = []
+    category_items = []
+    items = []
     menu = Menu.objects.get(id=id, display=True)
     cate = menu.categories.all()
+    for ca in cate:
+        if items:
+            print("Items", items)
+            category_items.append(items)
+            items = []
+        categories.append(ca)
+        for item in ca.items.all():
+            print("Item", item)
+            items.append(item)
+            print("Items list", items)
+    if items:
+        print("Items", items)
+        category_items.append(items)
+    print("Category", categories,"Category Items", category_items)
     print(menu)
     context['catmenu'] = menu
-    context["cate"] = cate
+    context["cate"] = categories
     context["id"] = id
-    print(context)
-    return render_to_response("usermenu.html", context)
+    context["citems"] = category_items
+    context["index"] = range(len(cate))
+    print("Dictionary", context)
+    return render_to_response("menuchoice.html", context)

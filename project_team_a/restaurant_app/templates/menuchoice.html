@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
+{% load index %}
 <!DOCTYPE html>
-<html>
+<div>
 <head lang="en">
     <meta charset="UTF-8">
     <title>Menu</title>
@@ -8,12 +9,52 @@
 {% block body %}
 <body>
     <h1>Menu</h1>
+<style>
+    .panel-heading a:after {
+    font-family:'Glyphicons Halflings';
+    content:"\e114";
+    float: right;
+    color: grey;
+}
+.panel-heading a.collapsed:after {
+    content:"\e080";
+}
+</style>
 <div class="container" align="center">
 <ul class="nav nav-pills" style="align:center;">
     {% for menu in menus %}
-    <li role="presentation" class="active"><a href="{% url 'restaurant_app:menu' menu.id 0 %}">{{ menu.name }}</li></a>
+    <li role="presentation" class="active"><a href="{% url 'restaurant_app:menu' menu.id %}">{{ menu.name }}</li></a>
     {% endfor %}
-    </ul></div>
+</ul></div>
+
+    {% for c in index %}
+    <div class="panel-group" id="accordion">
+    <div class="panel panel-default" id="panel{{c}}">
+        <div class="panel-heading">
+             <h4 class="panel-title">
+        <a data-toggle="collapse" data-target="#collapse{{c}}"
+           href="#collapse{{c}}">
+            {% with cate|index:c as cat %}<div align="center"> {{cat.name}}</div> {% endwith %}
+        </a>
+      </h4>
+        </div>
+                </div>
+        <div id="collapse{{c}}" class="panel-collapse collapse in">
+            <div class="panel-body">
+                {% with citems|index:c as item %}
+             {% for pitem in item %}
+                <div align="center">{{pitem.name}} {{pitem.price}}</div>
+              {% endfor %}
+                {% endwith %}
+
+            </div>
+        </div>
+    </div>
+</div>
+    {% endfor %}
+
 </body>
 {% endblock %}
 </html>
+
+
