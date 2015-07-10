@@ -5,3 +5,7 @@
 + requirments
 + .git ignore
 + make project
+
++ ## Problems
++ Foreign Key/ One to One in Order
++ Adding items for many to many in admin console doesnt work

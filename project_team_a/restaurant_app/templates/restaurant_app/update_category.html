@@ -4,14 +4,23 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>Menu</title>
+    <title></title>
 
 </head>
 
 {% block body %}
+
 <body>
-    <h1>Menu</h1>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form }}
+    <button type="submit">Submit</button>
+
+</form>
+
+{% endblock %}
 
 </body>
-{% endblock %}
+
 </html>

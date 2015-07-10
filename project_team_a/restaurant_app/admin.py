@@ -4,11 +4,14 @@ from django.contrib.auth.models import User
 
 # Register your models here.
 
-from .models import Order, Item, Category, Profile
+
+from .models import Order, Item, Category, Menu, Profile
+
 
 admin.site.register(Item)
 admin.site.register(Order)
 admin.site.register(Category)
+admin.site.register(Menu)
 
 class ProfileInline(admin.StackedInline):
     model = Profile
