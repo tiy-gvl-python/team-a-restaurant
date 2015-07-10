@@ -15,5 +15,5 @@ urlpatterns = [
     url(r'^category_form/', CategoryCreateView.as_view(), name="category_form"),
     url(r'^delete_category/(?P<pk>\d+)$', CategoryDeleteView.as_view(), name="delete_category"),
     url(r'^update_category/(?P<pk>\d+)$', CategoryUpdateView.as_view(), name="update_category"),
-    url(r'^/', home, name="home"),
+    url(r'^', home, name="home"),
 ]

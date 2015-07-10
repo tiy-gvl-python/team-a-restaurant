@@ -2,7 +2,7 @@ from django.shortcuts import render, render_to_response
 from restaurant_app.models import Menu, Category, Item
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView
-from .models import Item, Category,
+from .models import Item, Category, Menu
 
 def home(requests):
     return render_to_response("home.html")
@@ -76,7 +76,7 @@ class CategoryListView(ListView):
 
 class CategoryCreateView(CreateView):
     model = Category
-    fields = ['name']
+    fields = ['name', 'items']
     success_url = reverse_lazy('restaurant_app:category_form')
 
 class CategoryDeleteView(DeleteView):
@@ -85,6 +85,6 @@ class CategoryDeleteView(DeleteView):
 
 class CategoryUpdateView(UpdateView):
     model = Category
-    fields = ['name']
+    fields = ['name', 'items']
     template = "update_category.html"
     success_url = reverse_lazy('restaurant_app:category_list')
