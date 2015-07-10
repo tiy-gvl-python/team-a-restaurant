@@ -5,4 +5,3 @@ from django.contrib.auth.forms import UserCreationForm
 
 def home(requests):
     return render_to_response("home.html")
-
