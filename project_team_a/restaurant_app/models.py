@@ -22,6 +22,7 @@ class Item(models.Model):
     name = models.CharField(max_length=100)
     price = models.DecimalField(max_digits=8, decimal_places=2)
     timestamp = models.DateTimeField(auto_now_add=True)
+    description = models.TextField()
 
     def __str__(self):
         return "{}-{}-{}".format(self.name, self.price, self.timestamp)
@@ -43,6 +44,8 @@ class Menu(models.Model):
 
     def __str__(self):
         return "{} - {} - {}".format(self.categories, self.display, self.name)
+
+
 
 
 
