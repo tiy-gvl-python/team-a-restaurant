@@ -1,14 +1,19 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, render_to_response
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView
 from .models import Item, Category, Menu, Profile
-
+from django.contrib.auth.forms import UserCreationForm
+from django.views.generic.edit import FormView
+from django.template import RequestContext
+from .forms import UserProfileForm
+from django.contrib.auth.decorators import login_required, user_passes_test
+from .custom_wrappers import staff_wrapper_func, customer_wrapper_func, owner_wrapper_func
 
 def addtoorder(requests, user_id, item_id):
     order = Profile.objects.get(user_id = user_id)
     order.items.add(Item.objects.get(id = item_id))
     order.save()
-
 
 def home(requests):
     return render_to_response("home.html")
@@ -45,6 +50,7 @@ def menu(requests, id):
     context["menus"] = menu_act
     return render_to_response("menuchoice.html", context)
 
+
 class ItemListView(ListView):
     model = Item
     template = "item_list.html"
@@ -60,9 +66,11 @@ class ItemDeleteView(DeleteView):
     model = Item
     success_url = reverse_lazy('restaurant_app:item_list')
 
+
 class ItemDetailView(DetailView):
     model = Item
     success_url = reverse_lazy('restaurant_app:item_form')
+
 
 class ItemUpdateView(UpdateView):
     model = Item
@@ -74,14 +82,17 @@ class CategoryListView(ListView):
     model = Category
     template = "category_list.html"
 
+
 class CategoryCreateView(CreateView):
     model = Category
     fields = ['name', 'items']
     success_url = reverse_lazy('restaurant_app:category_form')
 
+
 class CategoryDeleteView(DeleteView):
     model = Category
     success_url = reverse_lazy('restaurant_app:category_list')
+
 
 class CategoryUpdateView(UpdateView):
     model = Category
@@ -98,9 +109,11 @@ class MenuCreateView(CreateView):
     fields = ['categories', 'display', 'name']
     success_url = reverse_lazy('restaurant_app:menu_form')
 
+
 class MenuDeleteView(DeleteView):
     model = Menu
     success_url = reverse_lazy('restaurant_app:menu_list')
+
 
 class MenuUpdateView(UpdateView):
     model = Menu
@@ -108,4 +121,42 @@ class MenuUpdateView(UpdateView):
     template = "update_menu.html"
     success_url = reverse_lazy('restaurant_app:menu_list')
 
+class UserRegistration(FormView):
+    #model = Profile
+    pass
 
+
+
+def user_profile_registration(request):
+    if request.POST:
+        username = request.POST['username']
+        password1 = request.POST['password1']
+        password2 = request.POST['password2']
+        phone = request.POST['phone']
+        customer = request.POST.get('customer')
+        staff = request.POST.get('staff')
+        owner = request.POST.get('owner')
+
+
+        user_form = UserProfileForm({
+            'username': username,
+            'password1': password1,
+            'password2': password2,
+            'phone': phone,
+            'customer': customer,
+            'staff': staff,
+            'owner': owner,
+
+
+        })
+        try:
+            user_form.save(commit=True)
+            return HttpResponseRedirect("/")
+        except ValueError:
+            return render_to_response("registration/create_user.html",
+                                      {'form': user_form},
+                                      context_instance=RequestContext(request))
+
+    return render_to_response("registration/create_user.html",
+                              {'form': UserProfileForm()},
+                              context_instance=RequestContext(request))

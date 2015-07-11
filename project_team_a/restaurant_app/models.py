@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import User
-from phonenumber_field.modelfields import PhoneNumberField
 # from django.core.validators import RegexValidator
 
 class Order(models.Model):
@@ -55,19 +54,19 @@ class Click(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
 
 # make Order.user = models.OneToOne(CommonUser) need to change later
-class Profile(models.Model):
-    user = models.OneToOneField(User, null=True)
-    phone = PhoneNumberField(blank=False)
+class Profile(User):
+    #user = models.OneToOneField(User, null=True)
+    phone = models.CharField(blank=False, max_length=17)
     staff = models.BooleanField(default=False)
-    customer = models.BooleanField(default=False)
+    customer = models.BooleanField(default=True)
     owner = models.BooleanField(default=False)
 
     class Meta:
-        ordering = ['user']
-        verbose_name = 'user'
-        verbose_name_plural = 'users'
+        ordering = ['id']
+        verbose_name = 'id'
+        verbose_name_plural = 'id'
 
-
+# default user.customer is set to True for MVP and authentiction
 
 
 

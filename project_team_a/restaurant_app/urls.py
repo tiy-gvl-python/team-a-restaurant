@@ -1,9 +1,15 @@
 from django.conf.urls import include, url
+
 from .views import home, menu, ItemCreateView, ItemDeleteView, ItemListView, ItemDetailView, ItemUpdateView, CategoryListView, \
-    CategoryCreateView, CategoryDeleteView, CategoryUpdateView, MenuListView, MenuCreateView, MenuDeleteView, MenuUpdateView
+    CategoryCreateView, CategoryDeleteView, CategoryUpdateView, MenuListView, MenuCreateView, MenuDeleteView, MenuUpdateView,  user_profile_registration
+from django.contrib.auth.views import login, logout
 
-urlpatterns = [
 
+
+    url(r'^accounts/login/', login, name="login"),
+    url(r'^logout/', logout, {'next_page': '/'}, name="logout"),
+    #url(r'^registration/', )
+    url(r'^profile-registration/', user_profile_registration, name="user_registration"),
     url(r'^me/(?P<id>\d+)nu/', menu, name="menu"),
     url(r'^item_form/', ItemCreateView.as_view(), name="item_form"),
     url(r'^item_list/', ItemListView.as_view(template="item_list.html"), name="item_list"),
