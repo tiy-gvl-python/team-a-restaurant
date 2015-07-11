@@ -26,7 +26,7 @@ SECRET_KEY = 'tj62bcm!owh!5q-@vpu2362*!*k(41fasby_-g-ew*+xx4op+&'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+AUTH_PROFILE_MODULE = "restaurant_app.Profile"
 
 # Application definition
 
