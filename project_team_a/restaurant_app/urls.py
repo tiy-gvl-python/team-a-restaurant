@@ -1,13 +1,11 @@
 from django.conf.urls import include, url
 
 from django.contrib.auth.decorators import login_required
-from .views import home, menuactchoice, menu, ItemCreateView, ItemDeleteView, ItemListView, ItemDetailView, ItemUpdateView, CategoryListView, \
-    CategoryCreateView, CategoryDeleteView, CategoryUpdateView, MenuListView, MenuCreateView, MenuDeleteView, MenuUpdateView, user_registration
 
 from .views import home, menuactchoice, menu, ItemCreateView, ItemDeleteView, ItemListView, ItemDetailView, \
     ItemUpdateView, CategoryListView, CategoryCreateView, CategoryDeleteView, CategoryUpdateView, MenuListView, \
-    MenuCreateView, MenuDeleteView, MenuUpdateView, user_profile_registration, CommentCreateView, CommentDeleteView, \
-    CommentsListView
+    MenuCreateView, MenuDeleteView, MenuUpdateView, CommentCreateView, CommentDeleteView, \
+    CommentsListView, user_registration
 
 from django.contrib.auth.views import login, logout
 
