@@ -48,6 +48,11 @@ class Menu(models.Model):
     def __str__(self):
         return "{} - {} - {}".format(self.categories, self.display, self.name)
 
+class Click(models.Model):
+    item = models.ForeignKey(Item, null = True)
+    category = models.ForeignKey(Category, null=True)
+    menu = models.ForeignKey(Menu, null = True)
+    timestamp = models.DateTimeField(auto_now_add=True)
 
 # make Order.user = models.OneToOne(CommonUser) need to change later
 class Profile(models.Model):

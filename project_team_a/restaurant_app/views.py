@@ -1,20 +1,20 @@
 from django.shortcuts import render, render_to_response
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView
-from .models import Item, Category, Menu
+from .models import Item, Category, Menu, Profile
+
+
+def addtoorder(requests, user_id, item_id):
+    order = Profile.objects.get(user_id = user_id)
+    order.items.add(Item.objects.get(id = item_id))
+    order.save()
+
 
 def home(requests):
     return render_to_response("home.html")
 
-
-def menuactchoice(requests):
-    menu_act = Menu.objects.filter(display=True)
-    print(menu_act)
-    context = {"menus": menu_act}
-    return render_to_response("menuchoice.html", context)
-
-
 def menu(requests, id):
+    menu_act = Menu.objects.filter(display=True)
     context = {}
     categories = []
     category_items = []
@@ -30,11 +30,11 @@ def menu(requests, id):
         for item in ca.items.all():
             print("Item", item)
             items.append(item)
-            print("Items list", items)
+        print("Items list", items)
     if items:
         print("Items", items)
         category_items.append(items)
-    print("Category", categories,"Category Items", category_items)
+        print("Category", categories,"Category Items", category_items)
     print(menu)
     context['catmenu'] = menu
     context["cate"] = categories
@@ -42,6 +42,7 @@ def menu(requests, id):
     context["citems"] = category_items
     context["index"] = range(len(cate))
     print("Dictionary", context)
+    context["menus"] = menu_act
     return render_to_response("menuchoice.html", context)
 
 class ItemListView(ListView):
