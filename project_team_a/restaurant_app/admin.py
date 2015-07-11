@@ -12,6 +12,7 @@ admin.site.register(Item)
 admin.site.register(Order)
 admin.site.register(Category)
 admin.site.register(Menu)
+admin.site.register(Profile)
 
 class ProfileInline(admin.StackedInline):
     model = Profile

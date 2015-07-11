@@ -1,7 +1,9 @@
+from django.contrib.auth.models import User
 from django.shortcuts import render, render_to_response
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView
-from .models import Item, Category, Menu
+from .models import Item, Category, Menu, Order, Profile
+from django.http import HttpResponseNotFound, HttpResponseRedirect
 
 def home(requests):
     return render_to_response("home.html")
@@ -43,6 +45,33 @@ def menu(requests, id):
     context["index"] = range(len(cate))
     print("Dictionary", context)
     return render_to_response("menuchoice.html", context)
+
+def cart(request, user_id):
+    context = {}
+    if not Order.objects.filter(user = Profile.objects.filter(user_id=user_id)):
+        profile = Profile.objects.get(user_id = user_id)
+        order = Order.objects.create(user = Profile.objects.get(user_id=user_id), submit=False, completed=False )
+        order.save()
+        print("RAN")
+        context = {'order': order.items}
+        # Made new Order
+    elif Order.objects.filter(user = Profile.objects.filter(user_id=user_id), submit=True, completed=True):
+        order = Order.objects.create(user = Profile.objects.filter(user_id=user_id), submit=False, completed=False )
+        order.save()
+
+    elif Order.objects.filter(user = Profile.objects.filter(user_id=user_id), submit = True):
+        # Needs to go to a being proccessed page
+        pass
+
+    else:
+        order = Order.objects.filter(user = Profile.objects.filter(user_id = user_id), submit=False, completed = False)
+        print(order)
+        context = {'order': list(order)[0].items.all()}
+    print(order)
+    return render_to_response("cart.html", context)
+
+
+
 
 class ItemListView(ListView):
     model = Item
@@ -106,5 +135,12 @@ class MenuUpdateView(UpdateView):
     fields = ['categories', 'display', 'name']
     template = "update_menu.html"
     success_url = reverse_lazy('restaurant_app:menu_list')
+
+
+
+
+
+
+
 
 

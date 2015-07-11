@@ -52,7 +52,7 @@ class Menu(models.Model):
 # make Order.user = models.OneToOne(CommonUser) need to change later
 class Profile(models.Model):
     user = models.OneToOneField(User, null=True)
-    phone = PhoneNumberField(blank=False)
+    phone = models.CharField(max_length=17, blank=False)
     staff = models.BooleanField(default=False)
     customer = models.BooleanField(default=False)
     owner = models.BooleanField(default=False)

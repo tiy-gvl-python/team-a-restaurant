@@ -1,9 +1,9 @@
 from django.conf.urls import include, url
-from .views import home, menuactchoice, menu, ItemCreateView, ItemDeleteView, ItemListView, ItemDetailView, ItemUpdateView, CategoryListView, \
+from .views import home, cart, menuactchoice, menu, ItemCreateView, ItemDeleteView, ItemListView, ItemDetailView, ItemUpdateView, CategoryListView, \
     CategoryCreateView, CategoryDeleteView, CategoryUpdateView, MenuListView, MenuCreateView, MenuDeleteView, MenuUpdateView
 
 urlpatterns = [
-
+    url(r'^cart(?P<user_id>\d+)', cart, name="cart"),
     url(r'^menuactlist', menuactchoice, name="menuactlist"),
     url(r'^me/(?P<id>\d+)nu/', menu, name="menu"),
     url(r'^item_form/', ItemCreateView.as_view(), name="item_form"),
