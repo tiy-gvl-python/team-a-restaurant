@@ -8,8 +8,7 @@
 </head>
 {% block body %}
 <body>
-
-    {%{ profile %}
+{{ request.profile.username }}
     <h1>Menu</h1>
 <style>
     .panel-heading a:after {
@@ -48,6 +47,7 @@
              {% for pitem in item %}
                 {{pitem.name}} {{pitem.price}}{% if user.is_authenticated %}
                 <form action="{% url restaurant_app.addtoorder %}" method="POST">
+                    {% csrf_token %}
                     <input id="submit" type="button" value="Click" />
                 </form>
                 {% endif %}

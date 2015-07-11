@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, render_to_response
 from django.core.urlresolvers import reverse_lazy, reverse
