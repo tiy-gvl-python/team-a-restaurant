@@ -1,12 +1,12 @@
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, render_to_response
+from django.shortcuts import render, render_to_response, redirect
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView
 from .models import Item, Category, Menu, Profile
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic.edit import FormView
 from django.template import RequestContext
-from .forms import UserProfileForm
+from .forms import ProfileForm
 from django.contrib.auth.decorators import login_required, user_passes_test
 from .custom_wrappers import staff_wrapper_func, customer_wrapper_func, owner_wrapper_func
 
@@ -14,7 +14,7 @@ from .custom_wrappers import staff_wrapper_func, customer_wrapper_func, owner_wr
 
 
 def home(requests):
-    return render_to_response("home.html")
+    return render_to_response("home.html", context_instance=RequestContext(requests))
 
 
 def menuactchoice(requests):
@@ -52,7 +52,9 @@ def menu(requests, id):
     context["citems"] = category_items
     context["index"] = range(len(cate))
     print("Dictionary", context)
-    return render_to_response("menuchoice.html", context)
+    return render_to_response("menuchoice.html",
+                              context,
+                              context_instance=RequestContext(requests))
 
 
 class ItemListView(ListView):
@@ -125,42 +127,29 @@ class MenuUpdateView(UpdateView):
     template = "update_menu.html"
     success_url = reverse_lazy('restaurant_app:menu_list')
 
-class UserRegistration(FormView):
-    #model = Profile
-    pass
 
-
-
-def user_profile_registration(request):
+# Pj helped me get out of a whole
+def user_registration(request):
     if request.POST:
-        username = request.POST['username']
-        password1 = request.POST['password1']
-        password2 = request.POST['password2']
-        phone = request.POST['phone']
-        customer = request.POST.get('customer')
-        staff = request.POST.get('staff')
-        owner = request.POST.get('owner')
-
-
-        user_form = UserProfileForm({
-            'username': username,
-            'password1': password1,
-            'password2': password2,
-            'phone': phone,
-            'customer': customer,
-            'staff': staff,
-            'owner': owner,
-
-
-        })
-        try:
-            user_form.save(commit=True)
-            return HttpResponseRedirect("/")
-        except ValueError:
-            return render_to_response("registration/create_user.html",
-                                      {'form': user_form},
+        ok = True
+        user_creation_form = UserCreationForm(request.POST)
+        profile_form = ProfileForm(request.POST)
+        if not user_creation_form.is_valid():
+            ok = False
+        if not profile_form.is_valid():
+            ok = False
+        if ok:
+            try:
+               user = user_creation_form.save()
+               profile = profile_form.save(commit=False)
+               profile.user = user
+               profile.save()
+               return HttpResponseRedirect('/')
+            except:
+                return render_to_response("registration/create_user.html",
+                                      {'u_form': UserCreationForm, 'p_form': ProfileForm},
                                       context_instance=RequestContext(request))
-
     return render_to_response("registration/create_user.html",
-                              {'form': UserProfileForm()},
-                              context_instance=RequestContext(request))
+                                  {'u_form': UserCreationForm(), 'p_form': ProfileForm()},
+                                  context_instance=RequestContext(request))
+

@@ -1,14 +1,14 @@
 from django.conf.urls import include, url
 from django.contrib.auth.decorators import login_required
 from .views import home, menuactchoice, menu, ItemCreateView, ItemDeleteView, ItemListView, ItemDetailView, ItemUpdateView, CategoryListView, \
-    CategoryCreateView, CategoryDeleteView, CategoryUpdateView, MenuListView, MenuCreateView, MenuDeleteView, MenuUpdateView, user_profile_registration
+    CategoryCreateView, CategoryDeleteView, CategoryUpdateView, MenuListView, MenuCreateView, MenuDeleteView, MenuUpdateView, user_registration
 from django.contrib.auth.views import login, logout
 
 urlpatterns = [
 
-    url(r'^accounts/login/', login, name="login"),
+    url(r'^login/', login, name="login"),
     url(r'^logout/', logout, {'next_page': '/'}, name="logout"),
-    url(r'^profile-registration/', user_profile_registration, name="user_registration"),
+    url(r'^registration/', user_registration, name="user_registration"),
     url(r'^menuactlist', menuactchoice, name="menuactlist"),
     url(r'^me/(?P<id>\d+)nu/', menu, name="menu"),
     url(r'^item_form/', ItemCreateView.as_view(), name="item_form"),

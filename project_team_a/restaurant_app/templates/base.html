@@ -23,8 +23,8 @@
 }
     </style>
 </head>
-<h1>Welcome {{ profile.phone }}</h1>
-{% if profile.id %}
+
+{% if user.id %}
     <h1>Welcome {{ user.username }}</h1>
     <a href="{% url 'restaurant_app:logout' %}">Logout</a>
 {% else %}
