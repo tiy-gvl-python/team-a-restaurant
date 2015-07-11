@@ -63,13 +63,9 @@ class Profile(models.Model):
 
 # default user.customer is set to True for MVP and authentiction
 
-
-
-
-
-
-
-
-
-
+class Comments(models.Model):
+    user = models.ForeignKey(Profile)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    comment = models.CharField(max_length=300)
+    recommend = models.BooleanField(default=True)
 

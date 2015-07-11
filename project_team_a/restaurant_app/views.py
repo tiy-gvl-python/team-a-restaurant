@@ -2,15 +2,13 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, render_to_response, redirect
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView
-from .models import Item, Category, Menu, Profile
+from .models import Item, Category, Menu, Profile, Comments
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic.edit import FormView
 from django.template import RequestContext
 from .forms import ProfileForm
 from django.contrib.auth.decorators import login_required, user_passes_test
 from .custom_wrappers import staff_wrapper_func, customer_wrapper_func, owner_wrapper_func
-
-
 
 
 def home(requests):
@@ -115,7 +113,6 @@ class MenuCreateView(CreateView):
     fields = ['categories', 'display', 'name']
     success_url = reverse_lazy('restaurant_app:menu_form')
 
-
 class MenuDeleteView(DeleteView):
     model = Menu
     success_url = reverse_lazy('restaurant_app:menu_list')
@@ -126,6 +123,35 @@ class MenuUpdateView(UpdateView):
     fields = ['categories', 'display', 'name']
     template = "update_menu.html"
     success_url = reverse_lazy('restaurant_app:menu_list')
+
+
+class UserRegistration(FormView):
+    #model = Profile
+    pass
+
+
+# comments section
+class CommentCreateView(CreateView):
+    model = Comments
+    fields = ['user', 'comment', 'recommend']
+    success_url = reverse_lazy('restaurant_app:comments_form')
+
+
+class CommentDeleteView(DeleteView):
+    model = Comments
+    success_url = reverse_lazy('restaurant_app:comments_list')
+
+
+class CommentUpdateView(UpdateView):
+    model = Comments
+    success_url = reverse_lazy('restaurant_app:comments_list')
+
+
+class CommentsListView(ListView):
+    model = Comments
+    success_url = reverse_lazy('restaurant_app:comments_list')
+    template="comments_list.html"
+# end comments section
 
 
 # Pj helped me get out of a whole
