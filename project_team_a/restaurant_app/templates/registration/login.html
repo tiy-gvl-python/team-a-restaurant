@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block body %}
-    <form method="post">
+    <form method="Post">
         {% csrf_token %}
         {{ form.as_table }}
         <button type="submit">Login</button>

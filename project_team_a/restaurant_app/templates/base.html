@@ -23,6 +23,14 @@
 }
     </style>
 </head>
+
+{% if user.id %}
+    <h1>Welcome {{ user.username }}</h1>
+    <a href="{% url 'restaurant_app:logout' %}">Logout</a>
+{% else %}
+    <a href="{% url 'restaurant_app:login' %}">Login</a>
+    <a href="{% url 'restaurant_app:user_registration' %}">Sign up</a>
+{% endif %}
 <div class="container" align="center">
 <ul class="nav nav-pills" style="align:center;">
     <li role="presentation" class="active"><a href="{% url 'restaurant_app:home' %}">Home</a></li>
