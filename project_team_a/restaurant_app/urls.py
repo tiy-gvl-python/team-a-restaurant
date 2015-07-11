@@ -4,6 +4,7 @@ from .views import home, menu, ItemCreateView, ItemDeleteView, ItemListView, Ite
     CategoryCreateView, CategoryDeleteView, CategoryUpdateView, MenuListView, MenuCreateView, MenuDeleteView, MenuUpdateView,  user_profile_registration
 from django.contrib.auth.views import login, logout
 
+urlpatterns = [
 
 
     url(r'^accounts/login/', login, name="login"),

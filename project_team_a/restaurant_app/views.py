@@ -19,34 +19,39 @@ def home(requests):
     return render_to_response("home.html")
 
 def menu(requests, id):
-    menu_act = Menu.objects.filter(display=True)
     context = {}
-    categories = []
-    category_items = []
-    items = []
-    menu = Menu.objects.get(id=id, display=True)
-    cate = menu.categories.all()
-    for ca in cate:
+    menu_act = Menu.objects.filter(display=True)
+    print(int(id))
+    if int(id):
+        print("RUNNING")
+        categories = []
+        category_items = []
+        items = []
+        menu = Menu.objects.get(id=id, display=True)
+        cate = menu.categories.all()
+        for ca in cate:
+            if items:
+                print("Items", items)
+                category_items.append(items)
+                items = []
+            categories.append(ca)
+            for item in ca.items.all():
+                print("Item", item)
+                items.append(item)
+            print("Items list", items)
         if items:
             print("Items", items)
             category_items.append(items)
-            items = []
-        categories.append(ca)
-        for item in ca.items.all():
-            print("Item", item)
-            items.append(item)
-        print("Items list", items)
-    if items:
-        print("Items", items)
-        category_items.append(items)
-        print("Category", categories,"Category Items", category_items)
-    print(menu)
-    context['catmenu'] = menu
-    context["cate"] = categories
-    context["id"] = id
-    context["citems"] = category_items
-    context["index"] = range(len(cate))
-    print("Dictionary", context)
+            print("Category", categories,"Category Items", category_items)
+        print(menu)
+        context['catmenu'] = menu
+        context["cate"] = categories
+        context["id"] = id
+        context["citems"] = category_items
+        context["index"] = range(len(cate))
+        print("Dictionary", context)
+    else:
+        context['index'] = -1
     context["menus"] = menu_act
     return render_to_response("menuchoice.html", context)
 

@@ -9,7 +9,7 @@
 {% block body %}
 <body>
 
-    {{ user }}
+    {%{ profile %}
     <h1>Menu</h1>
 <style>
     .panel-heading a:after {
@@ -29,6 +29,7 @@
     {% endfor %}
 </ul></div>
 <br/>
+    {% if index != -1 %}
     {% for c in index %}
     <div class="panel-group" id="accordion">
     <div class="panel panel-default" id="panel{{c}}">
@@ -58,7 +59,7 @@
     </div>
 </div>
     {% endfor %}
-
+{% endif %}
 </body>
 {% endblock %}
 </html>
