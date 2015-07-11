@@ -1,6 +1,9 @@
 from django.conf.urls import include, url
-from .views import home, menuactchoice, menu, ItemCreateView, ItemDeleteView, ItemListView, ItemDetailView, ItemUpdateView, CategoryListView, \
-    CategoryCreateView, CategoryDeleteView, CategoryUpdateView, MenuListView, MenuCreateView, MenuDeleteView, MenuUpdateView, user_profile_registration
+from .views import home, menuactchoice, menu, ItemCreateView, ItemDeleteView, ItemListView, ItemDetailView, \
+    ItemUpdateView, CategoryListView, CategoryCreateView, CategoryDeleteView, CategoryUpdateView, MenuListView, \
+    MenuCreateView, MenuDeleteView, MenuUpdateView, user_profile_registration, CommentCreateView, CommentDeleteView, \
+    CommentsListView
+
 from django.contrib.auth.views import login, logout
 
 urlpatterns = [
@@ -24,5 +27,8 @@ urlpatterns = [
     url(r'^menu_form/', MenuCreateView.as_view(), name="menu_form"),
     url(r'^delete_menu/(?P<pk>\d+)$', MenuDeleteView.as_view(), name="delete_menu"),
     url(r'^update_menu/(?P<pk>\d+)$', MenuUpdateView.as_view(), name="update_menu"),
+    url(r'^comments_form/', CommentCreateView.as_view(), name="comments_form"),
+    url(r'^delete_comments/', CommentDeleteView.as_view(), name="delete_comments"),
+    url(r'^comments_list/', CommentsListView.as_view(), name="comments_list"),
     url(r'^', home, name="home"),
 ]

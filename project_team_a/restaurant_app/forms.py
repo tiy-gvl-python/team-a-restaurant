@@ -1,7 +1,6 @@
 from __future__ import unicode_literals
 from .models import Profile
 from collections import OrderedDict
-from phonenumber_field.modelfields import PhoneNumberField
 from django import forms
 from django.contrib.auth import authenticate, get_user_model
 from django.contrib.auth.hashers import (
