@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Permission Denied</title>
+</head>
+
+{% block body %}
+<body>
+    <h1>YOU DO NOT HAVE PERMISSION TO BE THERE</h1>
+    <h2>Please go enjoy the rest of our site!</h2>
+<div class="jumbotron">
+  <h1>You Like Food?</h1>
+  <p>...</p>
+  <p><a class="btn btn-primary btn-lg" href="{% url 'restaurant_app:home' %}" role="button">Click here to go to our home
+      page and order something delicious
+  </a></p>
+</div>
+</body>
+{% endblock %}
+</html>

@@ -67,6 +67,11 @@ class ItemCreateView(CreateView):
     fields = ['name', 'price', 'description']
     success_url = reverse_lazy('restaurant_app:item_form')
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        print(self.request.user.username)
+        return context
+
 
 class ItemDeleteView(DeleteView):
     model = Item
@@ -153,3 +158,7 @@ def user_registration(request):
                                   {'u_form': UserCreationForm(), 'p_form': ProfileForm()},
                                   context_instance=RequestContext(request))
 
+
+def permission_denied(requests):
+    return render_to_response("restaurant_app/permission_denied.html",
+                              context_instance=RequestContext(requests))
