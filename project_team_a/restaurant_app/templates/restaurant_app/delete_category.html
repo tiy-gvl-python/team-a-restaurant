@@ -11,14 +11,13 @@
 {% block body %}
 
 <body>
-
-<form method="POST">
-    {% csrf_token %}
-    {{ form }}
-    <button type="submit">Submit</button>
-
-</form>
-
+{% if user.objects.filter(owner=False) %}
+    <form method="POST">
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit">Submit</button>
+    </form>
+{% endif %}
 {% endblock %}
 
 </body>

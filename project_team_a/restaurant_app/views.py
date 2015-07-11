@@ -144,7 +144,7 @@ def user_registration(request):
                profile = profile_form.save(commit=False)
                profile.user = user
                profile.save()
-               return HttpResponseRedirect('/')
+               return redirect('home')
             except:
                 return render_to_response("registration/create_user.html",
                                       {'u_form': UserCreationForm, 'p_form': ProfileForm},
