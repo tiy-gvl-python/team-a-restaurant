@@ -12,6 +12,10 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required, user_passes_test
 from .custom_wrappers import staff_wrapper_func, customer_wrapper_func, owner_wrapper_func
 
+
+# login required for everything but home page permission denied menu and registration
+
+@login_required
 def addtoorder(requests, item_id):
     if requests.POST:
         user_id = requests.user.id
@@ -26,7 +30,12 @@ def addtoorder(requests, item_id):
         print(menu_id)
         return redirect('restaurant_app:menu', id=menu_id)
 
+
+@user_passes_test(staff_wrapper_func,
+                  redirect_field_name='restaurant_app:denied',
+                  login_url='restaurant_app:denied')
 def order(requests):
+    # staff
     context = {}
     ocounts = []
     orders = Order.objects.filter(submit=True, completed=False)
@@ -37,12 +46,18 @@ def order(requests):
     context['ocounts'] = ocounts
     return render_to_response("staff.html", context, context_instance=RequestContext(requests))
 
+
+@user_passes_test(staff_wrapper_func,
+                  redirect_field_name='restaurant_app:denied',
+                  login_url='restaurant_app:denied')
 def ordercomplete(requests, id):
     order_object = Order.objects.get(id = int(id))
     order_object.completed = True
     order_object.save()
+    # staff
     return redirect('restaurant_app:order')
 
+@login_required
 def ordersubmit(requests):
     order = requests.POST['order']
     order_object = Order.objects.get(id = int(order))
@@ -51,7 +66,7 @@ def ordersubmit(requests):
     context={'order':int(order)}
     return render_to_response("proccess.html",context, context_instance=RequestContext(requests))
 
-
+@login_required
 def checkout(requests):
     context = {}
     itemtuple = []
@@ -71,10 +86,17 @@ def checkout(requests):
     context["items"] = itemtuple
     return render_to_response("checkout.html", context, context_instance=RequestContext(requests))
 
+
 class removefromorder(DeleteView):
     model = Count
     success_url = reverse_lazy('restaurant_app:cart')
 
+    @method_decorator(login_required(redirect_field_name='restaurant_app:login'))
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
+
+@login_required
 def cart(requests):
     context = {}
     user_id = requests.user.id
@@ -203,6 +225,7 @@ class ItemUpdateView(UpdateView):
         print("user passed test", owner_wrapper_func)
         return super().dispatch(*args, **kwargs)
 
+
 class CategoryListView(ListView):
     model = Category
     template = "category_list.html"
@@ -249,9 +272,11 @@ class CategoryUpdateView(UpdateView):
         print("user passed test", owner_wrapper_func)
         return super().dispatch(*args, **kwargs)
 
+
 class MenuListView(ListView):
     model = Menu
     template = "menu_list.html"
+
 
 class MenuCreateView(CreateView):
     model = Menu
