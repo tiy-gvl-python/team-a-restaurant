@@ -1,8 +1,12 @@
 from django.conf.urls import include, url
 
+from django.contrib.auth.decorators import login_required
+
+
 from .views import home, menu, ItemCreateView, ItemDeleteView, ItemListView, ItemDetailView, ItemUpdateView, CategoryListView, \
     CategoryCreateView, CategoryDeleteView, CategoryUpdateView, MenuListView, MenuCreateView, MenuDeleteView, MenuUpdateView,  user_registration, addtoorder, cart, \
-    permission_denied, removefromorder, checkout, order, ordercomplete, ordersubmit
+    permission_denied, removefromorder, checkout, order, ordercomplete, ordersubmit, CommentCreateView, CommentDeleteView, CommentListView, CommentUpdateView, AdminCommentListView
+
 from django.contrib.auth.views import login, logout
 
 urlpatterns = [
@@ -30,6 +34,11 @@ urlpatterns = [
     url(r'^menu_form/', MenuCreateView.as_view(), name="menu_form"),
     url(r'^delete_menu/(?P<pk>\d+)$', MenuDeleteView.as_view(), name="delete_menu"),
     url(r'^update_menu/(?P<pk>\d+)$', MenuUpdateView.as_view(), name="update_menu"),
+    url(r'^comment_form/', CommentCreateView.as_view(), name="comment_form"),
+    url(r'^delete_comment/(?P<pk>\d+)$', CommentDeleteView.as_view(), name="admin_delete_comment"),
+    url(r'^comment_list/$', CommentListView.as_view(), name="comment_list"),
+    url(r'^admin_comment_list/$', AdminCommentListView.as_view(), name="admin_comment_list"),
+    url(r'^comment_update/(?P<pk>\d+)$', CommentUpdateView.as_view(), name="admin_comment_update"),
     url(r'^addtoorder(?P<item_id>\d+)$', addtoorder, name="addtoorder"),
     url(r'^', home, name="home"),
 ]
