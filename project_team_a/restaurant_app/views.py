@@ -12,23 +12,28 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from .custom_wrappers import staff_wrapper_func, customer_wrapper_func, owner_wrapper_func
 
 def addtoorder(requests, user_id, item_id):
-    order = Order.objects.get(user = User.objects.get(id=user_id))
+    user_id = requests.user
+    order = Order.objects.get(user = Profile.objects.get(user=user_id))
     order.items.add(Item.objects.get(id = item_id))
     order.save()
 
 def cart(requests):
     context = {}
-    user_id = requests.user.id
-    if Order.objects.filter(user=User.objects.get(id=user_id), submit=False, completed=False):
-        order = Order.objects.filter(user=User.objects.get(id=user_id), submit=False, completed=False)
+    user_id = requests.user
+    if Order.objects.filter(user=Profile.objects.get(user=user_id), submit=False, completed=False):
+        order = Order.objects.filter(user=Profile.objects.get(user=user_id), submit=False, completed=False)
         context['items'] = order.items.all()
-    elif Order.objects.filter(user=User.objects.get(id=user_id), submit=True, completed=True) or not Order.objects.filter(user=User.objects.get(id=user_id)):
-        order = Order.objects.create(user=User.objects.get(id=user_id), submit=False, completed=True)
+    elif bool(Order.objects.filter(user=Profile.objects.get(user=user_id), submit=True, completed=True)):
+        order = Order.objects.create(user=Profile.objects.get(user=user_id), submit=False, completed=True)
+        order.save()
+        context['status'] = "Cart is empty"
+    elif bool(Order.objects.filter(user=Profile.objects.get(user=user_id))):
+        order = Order.objects.create(user=Profile.objects.get(user=user_id), submit=False, completed=True)
         order.save()
         context['status'] = "Cart is empty"
     else:
-        context['status'] = "Order is being proccessed Call "
-    render_to_response("cart.html", context, context_instance=RequestContext(requests))
+        context['status'] = "Order is being proccessed: Call Here"
+    return render_to_response("cart.html", context, context_instance=RequestContext(requests))
 
 
 def home(requests):
