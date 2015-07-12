@@ -1,13 +1,14 @@
 from django.conf.urls import include, url
 
 from .views import home, menu, ItemCreateView, ItemDeleteView, ItemListView, ItemDetailView, ItemUpdateView, CategoryListView, \
-    CategoryCreateView, CategoryDeleteView, CategoryUpdateView, MenuListView, MenuCreateView, MenuDeleteView, MenuUpdateView,  user_registration, addtoorder, cart
+    CategoryCreateView, CategoryDeleteView, CategoryUpdateView, MenuListView, MenuCreateView, MenuDeleteView, MenuUpdateView,  user_registration, addtoorder, cart, \
+    permission_denied
 from django.contrib.auth.views import login, logout
 
 urlpatterns = [
 
-
-    url(r'^login/', login, name="login"),
+    url(r'^/permission-denied/', permission_denied, name='denied'),
+    url(r'^accounts/login/', login, name="login"),
     url(r'^cart', cart, name="cart"),
     url(r'^logout/', logout, {'next_page': '/'}, name="logout"),
     url(r'^registration/', user_registration, name="user_registration"),

@@ -43,7 +43,6 @@ class Menu(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     name = models.CharField(max_length=30)
 
-
     def __str__(self):
         return "{} - {} - {}".format(self.categories, self.display, self.name)
 
@@ -55,11 +54,16 @@ class Click(models.Model):
 
 # make Order.user = models.OneToOne(CommonUser) need to change later
 class Profile(models.Model):
-    user = models.OneToOneField(User, null=True)
+    user = models.OneToOneField(User)
     phone = models.CharField(blank=False, max_length=17)
     staff = models.BooleanField(default=False)
     customer = models.BooleanField(default=True)
     owner = models.BooleanField(default=False)
+
+    def __str__(self):
+        return 'user.id: {}, username: {}, phone number: {}'.format(self.user.id,
+                                                             self.user,
+                                                             self.phone)
 
     class Meta:
         ordering = ['id']

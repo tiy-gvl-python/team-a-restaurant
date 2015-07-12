@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block body %}
-  <form method="post">
+  <form method="post" action="{% url 'restaurant_app:login' %}">
         {% csrf_token %}
         {{ u_form.as_p }}
         {{ p_form.as_p }}
