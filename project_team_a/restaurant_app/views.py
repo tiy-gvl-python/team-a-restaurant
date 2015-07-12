@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, render_to_response, redirect
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView
-from .models import Item, Category, Menu, Profile, Order
+from .models import Item, Category, Menu, Profile, Order, Count
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic.edit import FormView
 from django.template import RequestContext
@@ -12,24 +12,68 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required, user_passes_test
 from .custom_wrappers import staff_wrapper_func, customer_wrapper_func, owner_wrapper_func
 
-def addtoorder(requests, user_id, item_id):
-    user_id = requests.user
-    order = Order.objects.get(user = Profile.objects.get(user=user_id))
-    order.items.add(Item.objects.get(id = item_id))
-    order.save()
+def addtoorder(requests, item_id):
+    if requests.POST:
+        user_id = requests.user.id
+        user_id = User.objects.get(id=user_id)
+        print("Made it to here")
+        order = Order.objects.get(user = Profile.objects.get(user=user_id), submit=False)
+        print(order)
+        itemcount = Count.objects.create(item=Item.objects.get(id = item_id), order = order, count = requests.POST['count'])
+        order.save()
+        itemcount.save()
+        menu_id = int(requests.POST['menu'])
+        print(menu_id)
+        return redirect('restaurant_app:menu', id=menu_id)
+
+def order(requests):
+    pass
+
+def checkout(requests):
+    context = {}
+    itemtuple = []
+    order = requests.POST['order']
+    print(order)
+    #order = Order.objects.get(id=orderid)
+    counts = Count.objects.filter(order=order)
+    context['counts'] = counts
+    total = 0
+    print("Here")
+    for count in counts:
+        print(count.item.name, count.item.price , count.count)
+        itemtuple.append((count.item.name, count.item.price * count.count))
+        total +=  count.item.price * count.count
+    context["total"] = total
+    context["items"] = itemtuple
+    return render_to_response("checkout.html", context)
+
+class removefromorder(DeleteView):
+    model = Count
+    success_url = reverse_lazy('restaurant_app:cart')
 
 def cart(requests):
     context = {}
-    user_id = requests.user
+    user_id = requests.user.id
+    user_id = User.objects.get(id=user_id)
+    #print("Check if no cart", bool(Order.objects.filter(user=Profile.objects.get(user=user_id))))
+    #print("Check if needs new cart", bool(Order.objects.filter(user=Profile.objects.get(user=user_id), submit=True, completed=True)))
+    #print("Check if Cart is set", bool(Order.objects.filter(user=Profile.objects.get(user=user_id), submit=False, completed=False)))
     if Order.objects.filter(user=Profile.objects.get(user=user_id), submit=False, completed=False):
-        order = Order.objects.filter(user=Profile.objects.get(user=user_id), submit=False, completed=False)
-        context['items'] = order.items.all()
+        order = Order.objects.get(user=Profile.objects.get(user=user_id), submit=False, completed=False)
+        items = Count.objects.filter(order=order)
+        print("Here")
+        print(bool(len(items)))
+        if bool(len(items)):
+            print("Made it")
+            context['items'] = items
+            context['order'] = order.id
+            #context['orderobject'] = order
     elif bool(Order.objects.filter(user=Profile.objects.get(user=user_id), submit=True, completed=True)):
-        order = Order.objects.create(user=Profile.objects.get(user=user_id), submit=False, completed=True)
+        order = Order.objects.create(user=Profile.objects.get(user=user_id), submit=False, completed=False)
         order.save()
         context['status'] = "Cart is empty"
-    elif bool(Order.objects.filter(user=Profile.objects.get(user=user_id))):
-        order = Order.objects.create(user=Profile.objects.get(user=user_id), submit=False, completed=True)
+    elif not bool(Order.objects.filter(user=Profile.objects.get(user=user_id))):
+        order = Order.objects.create(user=Profile.objects.get(user=user_id), submit=False, completed=False)
         order.save()
         context['status'] = "Cart is empty"
     else:

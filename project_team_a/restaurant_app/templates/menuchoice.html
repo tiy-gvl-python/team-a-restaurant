@@ -48,7 +48,9 @@
                 {{pitem.name}} {{pitem.price}}{% if user.id %}
                 <form action="{% url 'restaurant_app:addtoorder' pitem.id %}" method="POST">
                     {% csrf_token %}
-                    <input id="submit" type="button" value="Add to Cart" />
+                    <input type="hidden" id="menu" name="menu" value="{{ id }}"/>
+                    <input type="number" id="count" name="count"/>
+                    <input id="submit" type="submit" value="Add to Cart" />
                 </form>
                 {% endif %}
               {% endfor %}
