@@ -7,7 +7,7 @@ from .models import Item, Category, Menu, Profile, Order, Count
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic.edit import FormView
 from django.template import RequestContext
-from .forms import ProfileForm
+from .forms import ProfileForm, ProfileEditForm
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required, user_passes_test
 from .custom_wrappers import staff_wrapper_func, customer_wrapper_func, owner_wrapper_func
@@ -365,3 +365,21 @@ def user_registration(request):
 def permission_denied(requests):
     return render_to_response("restaurant_app/permission_denied.html",
                               context_instance=RequestContext(requests))
+
+
+@login_required
+def activate(requests):
+    staff = 'staff'
+    owner = 'owner'
+    input = requests.POST['auth_code']
+    user_id = requests.user.id
+    profile = Profile.objects.get(user_id=user_id)
+    if input == staff:
+        profile.staff = True
+    if input == owner:
+        profile.owner = True
+    else:
+        return redirect('restaurant_app:denied')
+    profile.save()
+    context={'profile': profile}
+    return render_to_response("registration/add_permissions.html",context, context_instance=RequestContext(requests))
