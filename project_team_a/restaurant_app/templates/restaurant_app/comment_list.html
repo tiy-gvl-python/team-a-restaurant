@@ -13,12 +13,12 @@
 
     <h1>Comments List</h1>
 {% for comment in object_list %}
-    <div>{{ comment.name }}
-    <form method="POST" action="{% url 'restaurant_app:delete_comment' comment.id %}">
+    <div>{{ "Left by: "}} {{ comment.user }} <br/> {{ "Comment: "}}{{ comment.comment }} <br/> {{ comment.timestamp}}
+        <form method="POST" action="{% url 'restaurant_app:delete_comment' comment.id %}">
         {% csrf_token %}
         <button type="submit">Delete</button>
     </form>
-    <form method="get" action="{% url 'restaurant_app:comments_update' comment.id %}">
+    <form method="get" action="{% url 'restaurant_app:comment_update' comment.id %}">
         {% csrf_token %}
         <button type="submit">Edit</button>
     </form>

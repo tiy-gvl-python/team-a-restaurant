@@ -301,11 +301,15 @@ class UserRegistration(FormView):
     pass
 
 
-# comments section
+# comment section
 class CommentCreateView(CreateView):
     model = Comment
-    fields = ['user', 'comment', 'recommend']
-    success_url = reverse_lazy('restaurant_app:comment_form')
+    success_url = reverse_lazy('restaurant_app:comment_list')
+    fields = ['comment', 'recommend']
+
+    def form_valid(self, form):
+        form.instance.user = Profile.objects.get(user=self.request.user)
+        return super().form_valid(form)
 
 
 class CommentDeleteView(DeleteView):
@@ -323,7 +327,8 @@ class CommentListView(ListView):
     model = Comment
     success_url = reverse_lazy('restaurant_app:comment_list')
     template="comment_list.html"
-# end comments section
+
+# end comment section
 
 
 # Pj helped me get out of a whole

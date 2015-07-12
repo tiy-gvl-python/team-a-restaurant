@@ -90,3 +90,6 @@ class Comment(models.Model):
 
     def __str__(self):
         return "{}".format(self.user)
+
+    class Meta: #thank you Paul and Joel
+        ordering = ["-timestamp"]
