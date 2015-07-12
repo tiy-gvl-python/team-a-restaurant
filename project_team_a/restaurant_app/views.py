@@ -174,6 +174,13 @@ class ItemListView(ListView):
     model = Item
     template = "item_list.html"
 
+    @method_decorator(user_passes_test(owner_wrapper_func,
+                                       redirect_field_name='restaurant_app:denied',
+                                       login_url='restaurant_app:denied',
+                                       ))
+    def dispatch(self, *args, **kwargs):
+        print("user passed test", owner_wrapper_func)
+        return super().dispatch(*args, **kwargs)
 
 class ItemCreateView(CreateView):
     model = Item
@@ -276,6 +283,15 @@ class CategoryUpdateView(UpdateView):
 class MenuListView(ListView):
     model = Menu
     template = "menu_list.html"
+
+    @method_decorator(user_passes_test(owner_wrapper_func,
+                                       redirect_field_name='restaurant_app:denied',
+                                       login_url='restaurant_app:denied',
+                                       ))
+    def dispatch(self, *args, **kwargs):
+        print("user passed test", owner_wrapper_func)
+        return super().dispatch(*args, **kwargs)
+
 
 
 class MenuCreateView(CreateView):
