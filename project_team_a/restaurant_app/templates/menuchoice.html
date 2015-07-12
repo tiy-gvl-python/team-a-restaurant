@@ -8,7 +8,7 @@
 </head>
 {% block body %}
 <body>
-{{ request.profile.username }}
+{{ user.username }}
     <h1>Menu</h1>
 <style>
     .panel-heading a:after {
@@ -45,10 +45,10 @@
             <div class="panel-body" align="center">
                 {% with citems|index:c as item %}
              {% for pitem in item %}
-                {{pitem.name}} {{pitem.price}}{% if user.is_authenticated %}
-                <form action="{% url restaurant_app.addtoorder %}" method="POST">
+                {{pitem.name}} {{pitem.price}}{% if user.id %}
+                <form action="{% url 'restaurant_app:addtoorder' pitem.id %}" method="POST">
                     {% csrf_token %}
-                    <input id="submit" type="button" value="Click" />
+                    <input id="submit" type="button" value="Add to Cart" />
                 </form>
                 {% endif %}
               {% endfor %}

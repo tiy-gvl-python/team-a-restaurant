@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, render_to_response, redirect
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView
-from .models import Item, Category, Menu, Profile
+from .models import Item, Category, Menu, Profile, Order
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic.edit import FormView
 from django.template import RequestContext
@@ -12,9 +12,24 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from .custom_wrappers import staff_wrapper_func, customer_wrapper_func, owner_wrapper_func
 
 def addtoorder(requests, user_id, item_id):
-    order = Profile.objects.get(user_id = user_id)
+    order = Order.objects.get(user = User.objects.get(id=user_id))
     order.items.add(Item.objects.get(id = item_id))
     order.save()
+
+def cart(requests):
+    context = {}
+    user_id = requests.user.id
+    if Order.objects.filter(user=User.objects.get(id=user_id), submit=False, completed=False):
+        order = Order.objects.filter(user=User.objects.get(id=user_id), submit=False, completed=False)
+        context['items'] = order.items.all()
+    elif Order.objects.filter(user=User.objects.get(id=user_id), submit=True, completed=True) or not Order.objects.filter(user=User.objects.get(id=user_id)):
+        order = Order.objects.create(user=User.objects.get(id=user_id), submit=False, completed=True)
+        order.save()
+        context['status'] = "Cart is empty"
+    else:
+        context['status'] = "Order is being proccessed Call "
+    render_to_response("cart.html", context, context_instance=RequestContext(requests))
+
 
 def home(requests):
     return render_to_response("home.html", context_instance=RequestContext(requests))

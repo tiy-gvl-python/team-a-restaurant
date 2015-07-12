@@ -1,13 +1,14 @@
 from django.conf.urls import include, url
 
 from .views import home, menu, ItemCreateView, ItemDeleteView, ItemListView, ItemDetailView, ItemUpdateView, CategoryListView, \
-    CategoryCreateView, CategoryDeleteView, CategoryUpdateView, MenuListView, MenuCreateView, MenuDeleteView, MenuUpdateView,  user_registration
+    CategoryCreateView, CategoryDeleteView, CategoryUpdateView, MenuListView, MenuCreateView, MenuDeleteView, MenuUpdateView,  user_registration, addtoorder, cart
 from django.contrib.auth.views import login, logout
 
 urlpatterns = [
 
 
     url(r'^login/', login, name="login"),
+    url(r'^cart', cart, name="cart"),
     url(r'^logout/', logout, {'next_page': '/'}, name="logout"),
     url(r'^registration/', user_registration, name="user_registration"),
     url(r'^me/(?P<id>\d+)nu/', menu, name="menu"),
@@ -24,5 +25,6 @@ urlpatterns = [
     url(r'^menu_form/', MenuCreateView.as_view(), name="menu_form"),
     url(r'^delete_menu/(?P<pk>\d+)$', MenuDeleteView.as_view(), name="delete_menu"),
     url(r'^update_menu/(?P<pk>\d+)$', MenuUpdateView.as_view(), name="update_menu"),
+    url(r'^addtoorder(?P<pk>\d+)$', addtoorder, name="addtoorder"),
     url(r'^', home, name="home"),
 ]
