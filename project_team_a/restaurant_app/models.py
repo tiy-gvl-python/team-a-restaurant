@@ -91,5 +91,5 @@ class Comment(models.Model):
     def __str__(self):
         return "{}".format(self.user)
 
-    class Meta: #thank you Paul and Joel
+    class Meta: #thank you Paul and Joel (displays comments newest first
         ordering = ["-timestamp"]

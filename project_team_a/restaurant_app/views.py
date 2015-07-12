@@ -302,7 +302,7 @@ class UserRegistration(FormView):
 
 
 # comment section
-class CommentCreateView(CreateView):
+class CommentCreateView(CreateView): #comment customer view
     model = Comment
     success_url = reverse_lazy('restaurant_app:comment_list')
     fields = ['comment', 'recommend']
@@ -314,19 +314,25 @@ class CommentCreateView(CreateView):
 
 class CommentDeleteView(DeleteView):
     model = Comment
-    success_url = reverse_lazy('restaurant_app:comment_list')
+    success_url = reverse_lazy('restaurant_app:admin_comment_list')
 
 
 class CommentUpdateView(UpdateView):
     model = Comment
     fields = ['user', 'comment', 'recommend']
-    success_url = reverse_lazy('restaurant_app:comment_list')
+    success_url = reverse_lazy('restaurant_app:admin_comment_list')
+
+class AdminCommentListView(ListView):
+    model = Comment
+    success_url = reverse_lazy('restaurant_app:admin_comment_list')
+    template = "admin_comment_list.html"
 
 
 class CommentListView(ListView):
     model = Comment
     success_url = reverse_lazy('restaurant_app:comment_list')
-    template="comment_list.html"
+    template = "comment_list.html"
+
 
 # end comment section
 
