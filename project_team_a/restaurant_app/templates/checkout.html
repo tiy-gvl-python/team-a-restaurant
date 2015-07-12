@@ -13,7 +13,7 @@
                 Item: {{ name }} <br/>  Price: ${{ value }}
             {% endfor %}
 <h1>Total</h1> ${{ total }}
-     <form method="POST" action="order">
+     <form method="POST" action="ordersubmit">
         {% csrf_token %}
         <input type="hidden" id="order" name="order" value="{{ order }}"/>
          <button type="submit">Checkout</button>

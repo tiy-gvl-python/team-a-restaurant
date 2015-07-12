@@ -9,16 +9,17 @@
 <body>
 <h1>{{status}}</h1>
         <div>
-            {% for name, value in items %}
-                Item: {{ name }} <br/>  Price: ${{ value }}
-            {% endfor %}
-<h1>Total</h1> ${{ total }}
-            <form method="POST" action="{% url 'completed' order.id %}">{% csrf_token %}
+            {% for order in orders %}
+                {{ order }}
+            <form method="POST" action="{% url 'restaurant_app:completed' order.id %}">
+                {% csrf_token %}
                 {{ form }}
         <button type="submit">Completed</button>
     </form>
+            {% endfor %}
         </div>
 </div>
+
 </body>
 {% endblock %}
 </html>

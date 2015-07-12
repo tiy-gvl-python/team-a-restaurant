@@ -29,9 +29,8 @@ def addtoorder(requests, item_id):
 def order(requests):
     context = {}
     itemtuple = []
-    order = requests.POST['order']
-    print(object)
-    order.submit = True
+    order = Order.objects.filter(submit=True, completed=False)
+    context["orders"] = order
     counts = Count.objects.filter(order=order)
     context['counts'] = counts
     total = 0
@@ -42,12 +41,20 @@ def order(requests):
         total +=  count.item.price * count.count
     context["total"] = total
     context["items"] = itemtuple
-    return render_to_response("staff.html", context)
+    return render_to_response("staff.html", context, context_instance=RequestContext(requests))
 
 class Ordercomplete(UpdateView):
         model = Order
         fields = ['completed']
         template = "staff.html"
+        success_url = reverse_lazy('restaurant_app:order')
+
+def ordersubmit(requests):
+    order = requests.POST['order']
+    order_object = Order.objects.get(id = int(order))
+    order_object.submit = True
+    order_object.save()
+    return render_to_response("proccess.html", context_instance=RequestContext(requests))
 
 
 def checkout(requests):
