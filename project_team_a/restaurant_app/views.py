@@ -27,13 +27,35 @@ def addtoorder(requests, item_id):
         return redirect('restaurant_app:menu', id=menu_id)
 
 def order(requests):
-    pass
+    context = {}
+    itemtuple = []
+    order = requests.POST['order']
+    print(object)
+    order.submit = True
+    counts = Count.objects.filter(order=order)
+    context['counts'] = counts
+    total = 0
+    print("Here")
+    for count in counts:
+        print(count.item.name, count.item.price , count.count)
+        itemtuple.append((count.item.name, count.item.price * count.count))
+        total +=  count.item.price * count.count
+    context["total"] = total
+    context["items"] = itemtuple
+    return render_to_response("staff.html", context)
+
+class Ordercomplete(UpdateView):
+        model = Order
+        fields = ['completed']
+        template = "staff.html"
+
 
 def checkout(requests):
     context = {}
     itemtuple = []
     order = requests.POST['order']
     print(order)
+    context['order'] = order
     #order = Order.objects.get(id=orderid)
     counts = Count.objects.filter(order=order)
     context['counts'] = counts
@@ -45,7 +67,7 @@ def checkout(requests):
         total +=  count.item.price * count.count
     context["total"] = total
     context["items"] = itemtuple
-    return render_to_response("checkout.html", context)
+    return render_to_response("checkout.html", context, context_instance=RequestContext(requests))
 
 class removefromorder(DeleteView):
     model = Count

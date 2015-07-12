@@ -2,11 +2,13 @@ from django.conf.urls import include, url
 
 from .views import home, menu, ItemCreateView, ItemDeleteView, ItemListView, ItemDetailView, ItemUpdateView, CategoryListView, \
     CategoryCreateView, CategoryDeleteView, CategoryUpdateView, MenuListView, MenuCreateView, MenuDeleteView, MenuUpdateView,  user_registration, addtoorder, cart, \
-    permission_denied, removefromorder, checkout
+    permission_denied, removefromorder, checkout, order, Ordercomplete
 from django.contrib.auth.views import login, logout
 
 urlpatterns = [
-    url(r'^checkout', checkout, name="checkout"),
+    url(r'^update_order/(?P<pk>\d+)$', Ordercomplete.as_view(), name="completed"),
+    url(r'^order$', order, name="order"),
+    url(r'^checkout$', checkout, name="checkout"),
     url(r'^removeitem(?P<pk>\d+)$', removefromorder.as_view(), name='remove'),
     url(r'^/permission-denied/', permission_denied, name='denied'),
     url(r'^accounts/login/', login, name="login"),
