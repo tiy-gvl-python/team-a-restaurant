@@ -1,18 +1,12 @@
 {% extends 'base.html' %}
 
 <!DOCTYPE html>
-<html>
-<head lang="en">
-    <title>Welcome to our Restaurant App!</title>
-    <meta charset="UTF-8">
-    <meta name="viewpoint" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="assets/css/main.css" />
+<html>{% block head %}
+{% endblock %}
 
-</head>
 
 {% block body %}
-<div class="homepage">
-    <div id="page-wrapper">
+<body>
 			<section id="hero" class="container">
 <header>
 								<h2>Welcome to our Restaurant App!
@@ -25,24 +19,11 @@
                             <ul class="actions">
                                 <a href="{% url 'restaurant_app:menu' 0 %}" class="button"><strong>Restaurant Menu</strong></a>
 						</ul>
-			            </nav>
             </section>
         </div>
     </div>
 
 
-
-        </div>
-        <div id="footer-wrapper">
-					<div id="footer" class="container">
-						<header class="major">
-							<h2></h2>
-							<p></p>
-						</header>
-
-
-                    </div>
-            </div>
 
 </body>
 {% endblock %}
