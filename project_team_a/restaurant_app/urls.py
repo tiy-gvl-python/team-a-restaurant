@@ -6,11 +6,10 @@ from .views import home, menuactchoice, menu, ItemCreateView, ItemDeleteView, It
 from django.contrib.auth.views import login, logout
 
 urlpatterns = [
-
-    url(r'^login/', login, name="login"),
+    url(r'^/permission-denied/', permission_denied, name='denied'),
+    url(r'^accounts/login/', login, name="login"),
     url(r'^logout/', logout, {'next_page': '/'}, name="logout"),
     url(r'^registration/', user_registration, name="user_registration"),
-    url(r'^permission-denied/', permission_denied, name='denied'),
     url(r'^menuactlist', menuactchoice, name="menuactlist"),
     url(r'^me/(?P<id>\d+)nu/', menu, name="menu"),
     url(r'^item_form/', ItemCreateView.as_view(), name="item_form"),
