@@ -89,12 +89,13 @@
 								</ul>
 							</nav>
 {% if user.id %}
+    <div>
     <h1>Welcome {{ user.username }}</h1>
     <a href="{% url 'restaurant_app:logout' %}">Logout</a>
 {% else %}
     <a href="{% url 'restaurant_app:login' %}">Login</a>
     <a href="{% url 'restaurant_app:user_registration' %}">Sign up</a>
-{% endif %}
+{% endif %}</div>
 					</div>
 
 
