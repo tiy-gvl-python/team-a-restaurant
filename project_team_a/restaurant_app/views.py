@@ -10,7 +10,7 @@ from django.template import RequestContext
 from .forms import ProfileForm
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required, user_passes_test
-from .custom_wrappers import staff_wrapper_func, customer_wrapper_func, owner_wrapper_func, user_test
+from .custom_wrappers import staff_wrapper_func, customer_wrapper_func, owner_wrapper_func
 
 
 
@@ -69,20 +69,6 @@ class ItemCreateView(CreateView):
     fields = ['name', 'price', 'description']
     success_url = reverse_lazy('restaurant_app:item_form')
 
-    #def get_context_data(self, **kwargs):
-        #context = super().get_context_data(**kwargs)
-     #   u_id = self.request.user.id
-       # print(self.request.user.username)
-      #  print(u_id)
-        #if not Profile.objects.filter(owner=True) and not Profile.objects.filter(user_id=u_id):
-        #if Profile.objects.filter(user_id=u_id):
-         #   print('It worked!')
-          #  return redirect('restaurant_app:denied')
-        #else:
-         #   pass
-          #  print('If I dont redirect I dont work')
-        #return redirect('restaurant_app:denied')
-
     @method_decorator(user_passes_test(owner_wrapper_func,
                                        redirect_field_name='restaurant_app:denied',
                                        login_url='restaurant_app:denied',
@@ -96,8 +82,12 @@ class ItemDeleteView(DeleteView):
     model = Item
     success_url = reverse_lazy('restaurant_app:item_list')
 
-    @method_decorator(login_required(redirect_field_name='restaurant_app:login'))
+    @method_decorator(user_passes_test(owner_wrapper_func,
+                                       redirect_field_name='restaurant_app:denied',
+                                       login_url='restaurant_app:denied',
+                                       ))
     def dispatch(self, *args, **kwargs):
+        print("user passed test", owner_wrapper_func)
         return super().dispatch(*args, **kwargs)
 
 
