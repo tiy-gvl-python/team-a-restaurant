@@ -1,3 +1,4 @@
+from django.core.validators import MinValueValidator
 from django.db import models
 from django.contrib.auth.models import User
 # from django.core.validators import RegexValidator
@@ -29,7 +30,7 @@ class Count(models.Model):
 
 class Item(models.Model):
     name = models.CharField(max_length=100)
-    price = models.DecimalField(max_digits=8, decimal_places=2)
+    price = models.DecimalField(decimal_places=2, max_digits=12, min_value=0.00) #validators=MinValueValidator('0.01'))
     timestamp = models.DateTimeField(auto_now_add=True)
     description = models.TextField(blank=True)
 
