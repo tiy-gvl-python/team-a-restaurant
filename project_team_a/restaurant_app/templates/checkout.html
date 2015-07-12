@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Menu</title>
+</head>
+{% block body %}
+<body>
+<h1>{{status}}</h1>
+        <div>
+            {% for name, value in items %}
+                Item: {{ name }} <br/>  Price: ${{ value }}
+            {% endfor %}
+<h1>Total</h1> ${{ total }}
+     <form method="POST" action="ordersubmit">
+        {% csrf_token %}
+        <input type="hidden" id="order" name="order" value="{{ order }}"/>
+         <button type="submit">Checkout</button>
+    </form>
+        </div>
+</div>
+</body>
+{% endblock %}
+</html>

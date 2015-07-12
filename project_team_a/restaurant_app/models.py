@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 # from django.core.validators import RegexValidator
 
 class Order(models.Model):
-    items = models.ManyToManyField('Item')
+    items = models.ManyToManyField('Item', through="Count")
     user = models.ForeignKey('Profile')
     timestamp = models.DateTimeField(auto_now_add=True)
     completed = models.BooleanField()
@@ -13,11 +13,19 @@ class Order(models.Model):
         pass
 
     def __str_(self):
-        return"{}-{}-{}-{}-{}".format(self.items,
+        return "{}-{}-{}-{}-{}".format(self.items,
                                       self.user,
                                       self.timestamp,
                                       self.completed,
                                       self.submit)
+class Count(models.Model):
+    item = models.ForeignKey("Item")
+    order = models.ForeignKey(Order)
+    count = models.IntegerField()
+
+    def __str__(self):
+        return "Item {} - Amount {}".format(self.item, self.count)
+
 
 class Item(models.Model):
     name = models.CharField(max_length=100)
@@ -26,7 +34,7 @@ class Item(models.Model):
     description = models.TextField(blank=True)
 
     def __str__(self):
-        return "{}-{}-{}".format(self.name, self.price, self.timestamp)
+        return "{} - Price: {} ".format(self.name, self.price)
 
 
 class Category(models.Model):
@@ -43,10 +51,14 @@ class Menu(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     name = models.CharField(max_length=30)
 
-
     def __str__(self):
         return "{} - {} - {}".format(self.categories, self.display, self.name)
 
+class Click(models.Model):
+    item = models.ForeignKey(Item, null = True)
+    category = models.ForeignKey(Category, null=True)
+    menu = models.ForeignKey(Menu, null = True)
+    timestamp = models.DateTimeField(auto_now_add=True)
 
 # make Order.user = models.OneToOne(CommonUser) need to change later
 class Profile(models.Model):
@@ -55,6 +67,11 @@ class Profile(models.Model):
     staff = models.BooleanField(default=False)
     customer = models.BooleanField(default=True)
     owner = models.BooleanField(default=False)
+
+    def __str__(self):
+        return 'user.id: {}, username: {}, phone number: {}'.format(self.user.id,
+                                                             self.user,
+                                                             self.phone)
 
     class Meta:
         ordering = ['id']

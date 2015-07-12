@@ -1,13 +1,14 @@
 {% extends 'base.html' %}
 {% load index %}
-<!DOCTYPE html>
 <div>
 <head lang="en">
     <meta charset="UTF-8">
     <title>Menu</title>
+    Hey
 </head>
 {% block body %}
 <body>
+{{ user.username }}
     <h1>Menu</h1>
 <style>
     .panel-heading a:after {
@@ -26,24 +27,32 @@
     <li role="presentation" class="active"><a href="{% url 'restaurant_app:menu' menu.id %}">{{ menu.name }}</li></a>
     {% endfor %}
 </ul></div>
-
+<br/>
+    {% if index != -1 %}
     {% for c in index %}
     <div class="panel-group" id="accordion">
     <div class="panel panel-default" id="panel{{c}}">
-        <div class="panel-heading">
+        <div class="panel-heading" align="center">
              <h4 class="panel-title">
         <a data-toggle="collapse" data-target="#collapse{{c}}"
            href="#collapse{{c}}">
-            {% with cate|index:c as cat %}<div align="center"> {{cat.name}}</div> {% endwith %}
+            {% with cate|index:c as cat %} {{cat.name}} {% endwith %}
         </a>
       </h4>
         </div>
                 </div>
         <div id="collapse{{c}}" class="panel-collapse collapse in">
-            <div class="panel-body">
+            <div class="panel-body" align="center">
                 {% with citems|index:c as item %}
              {% for pitem in item %}
-                <div align="center">{{pitem.name}} {{pitem.price}}</div>
+                {{pitem.name}} {{pitem.price}}{% if user.id %}
+                <form action="{% url 'restaurant_app:addtoorder' pitem.id %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" id="menu" name="menu" value="{{ id }}"/>
+                    <input type="number" id="count" name="count"/>
+                    <input id="submit" type="submit" value="Add to Cart" />
+                </form>
+                {% endif %}
               {% endfor %}
                 {% endwith %}
 
@@ -52,7 +61,7 @@
     </div>
 </div>
     {% endfor %}
-
+{% endif %}
 </body>
 {% endblock %}
 </html>

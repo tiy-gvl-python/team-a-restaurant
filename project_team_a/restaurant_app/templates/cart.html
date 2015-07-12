@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Menu</title>
+</head>
+{% block body %}
+<body>
+<h1>{{status}}</h1>
+        <div>
+            {% for item in items %}
+                {{item}}
+    <form method="POST" action="{% url 'restaurant_app:remove' item.id %}">
+        {% csrf_token %}
+        <button type="submit">Delete</button>
+    </form>
+            {% endfor %}
+        </div>
+
+    <form method="POST" action="checkout">
+        {% csrf_token %}
+        <input type="hidden" id="order" name="order" value="{{ order }}"/>
+        <button type="submit">Checkout</button>
+    </form>
+</div>
+</body>
+{% endblock %}
+</html>

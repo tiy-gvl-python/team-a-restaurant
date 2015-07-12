@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Menu</title>
+</head>
+{% block body %}
+<body>
+<h1>{{status}}</h1>
+        <div>
+            {% for order, count in ocounts %}
+
+                Order Id: {{ order.id }} <br/>Items:{{ count }}
+            <form method="POST" action="{% url 'restaurant_app:completed' order.id%}">
+                {% csrf_token %}
+                {{ form }}
+        <button type="submit">Completed</button>
+    </form>
+            {% endfor %}
+        </div>
+</div>
+
+</body>
+{% endblock %}
+</html>

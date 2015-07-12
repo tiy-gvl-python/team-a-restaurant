@@ -3,7 +3,7 @@
 <div align="center">
 <link href="{% static 'bootstrap-3.3.5-dist/css/bootstrap.css' %}" rel="stylesheet" type="text/css">
 <head>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
@@ -34,8 +34,9 @@
 <div class="container" align="center">
 <ul class="nav nav-pills" style="align:center;">
     <li role="presentation" class="active"><a href="{% url 'restaurant_app:home' %}">Home</a></li>
-    <li role="presentation" class="active"><a href="{% url 'restaurant_app:menuactlist' %}">Menu</a></li>
+    <li role="presentation" class="active"><a href="{% url 'restaurant_app:menu' 0 %}">Menu</a></li>
     <li role="presentation" class="active"><a href="/">Home</a></li>
+    <li role="presentation" class="active"><a href="{% url 'restaurant_app:cart' %}">Cart</a></li>
     <li role="presentation" class="active"><a href="{% url 'restaurant_app:item_form' %}">Create Item</a></li>
     <li role="presentation" class="active"><a href="{% url 'restaurant_app:item_list' %}">List Item</a></li>
     <li role="presentation" class="active"><a href="{% url 'restaurant_app:category_form' %}">Add Category</a></li>
