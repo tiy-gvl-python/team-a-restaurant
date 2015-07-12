@@ -23,6 +23,11 @@
         <input type="hidden" id="order" name="order" value="{{ order }}"/>
         <button type="submit">Checkout</button>
     </form>
+
+    <form method="POST" action="{% url 'restaurant_app:menu' 0 %}">
+        {% csrf_token %}
+        <button type="submit">Order!</button>
+    </form>
 </div>
 </body>
 {% endblock %}
