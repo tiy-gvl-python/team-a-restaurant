@@ -2,7 +2,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, render_to_response, redirect
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView
-from .models import Item, Category, Menu, Profile, Comments
+from .models import Item, Category, Menu, Profile, Comment
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic.edit import FormView
 from django.template import RequestContext
@@ -132,25 +132,26 @@ class UserRegistration(FormView):
 
 # comments section
 class CommentCreateView(CreateView):
-    model = Comments
+    model = Comment
     fields = ['user', 'comment', 'recommend']
-    success_url = reverse_lazy('restaurant_app:comments_form')
+    success_url = reverse_lazy('restaurant_app:comment_form')
 
 
 class CommentDeleteView(DeleteView):
-    model = Comments
-    success_url = reverse_lazy('restaurant_app:comments_list')
+    model = Comment
+    success_url = reverse_lazy('restaurant_app:comment_list')
 
 
 class CommentUpdateView(UpdateView):
-    model = Comments
-    success_url = reverse_lazy('restaurant_app:comments_list')
+    model = Comment
+    fields = ['user', 'comment', 'recommend']
+    success_url = reverse_lazy('restaurant_app:comment_list')
 
 
-class CommentsListView(ListView):
-    model = Comments
-    success_url = reverse_lazy('restaurant_app:comments_list')
-    template="comments_list.html"
+class CommentListView(ListView):
+    model = Comment
+    success_url = reverse_lazy('restaurant_app:comment_list')
+    template="comment_list.html"
 # end comments section
 
 

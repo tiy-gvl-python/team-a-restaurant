@@ -12,13 +12,13 @@
 {% block body %}
 
     <h1>Comments List</h1>
-{% for comment in comments_list %}
+{% for comment in object_list %}
     <div>{{ comment.name }}
-    <form method="POST" action="{% url 'restaurant_app:delete_comments' item.id %}">
+    <form method="POST" action="{% url 'restaurant_app:delete_comment' comment.id %}">
         {% csrf_token %}
         <button type="submit">Delete</button>
     </form>
-    <form method="get" action="{% url 'restaurant_app:item_update' item.id %}">
+    <form method="get" action="{% url 'restaurant_app:comments_update' comment.id %}">
         {% csrf_token %}
         <button type="submit">Edit</button>
     </form>

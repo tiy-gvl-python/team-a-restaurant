@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from .views import home, menuactchoice, menu, ItemCreateView, ItemDeleteView, ItemListView, ItemDetailView, \
     ItemUpdateView, CategoryListView, CategoryCreateView, CategoryDeleteView, CategoryUpdateView, MenuListView, \
     MenuCreateView, MenuDeleteView, MenuUpdateView, CommentCreateView, CommentDeleteView, \
-    CommentsListView, user_registration
+    CommentListView, user_registration
 
 from django.contrib.auth.views import login, logout
 
@@ -31,6 +31,6 @@ urlpatterns = [
     url(r'^update_menu/(?P<pk>\d+)$', MenuUpdateView.as_view(), name="update_menu"),
     url(r'^comments_form/', CommentCreateView.as_view(), name="comments_form"),
     url(r'^delete_comments/', CommentDeleteView.as_view(), name="delete_comments"),
-    url(r'^comments_list/', CommentsListView.as_view(), name="comments_list"),
+    url(r'^comments_list/', CommentListView.as_view(), name="comments_list"),
     url(r'^', home, name="home"),
 ]
