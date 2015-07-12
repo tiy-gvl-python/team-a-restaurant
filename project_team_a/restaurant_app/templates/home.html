@@ -4,19 +4,38 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
+    <meta name="viewpoint" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="assets/css/main.css" />
     <title></title>
 </head>
 
 {% block body %}
-<body>
-    <h1>Hey</h1>
-    Yo
-    Lets go
-<div class="jumbotron">
-  <h1>You Like Food?</h1>
-  <p>...</p>
-  <p><a class="btn btn-primary btn-lg" href="#" role="button">This Button Does Nothing</a></p>
-</div>
+<body class="homepage">
+    <div id="page-wrapper">
+
+    <div id="header-wrapper">
+        <div id="header" class="container">
+            <nav id="nav">
+
+			<section id="hero" class="container">
+							<header>
+								<h2>Welcome to our Restaurant App!
+								<br />
+								</h2>
+							</header>
+							<p><strong>Bekk Blando, Jeff Hacker, Lance Rogers, Paul Nitto</strong>
+							<br />
+							</p>
+							<ul class="actions">
+                                <a href="{% url 'restaurant_app:menu' 0 %}" class="button"><strong>Restaurant Menu</strong></a>
+							</ul>
+			</section>
+                </nav>
+
+
+        </div>
+
 </body>
 {% endblock %}
 </html>
+<html>
