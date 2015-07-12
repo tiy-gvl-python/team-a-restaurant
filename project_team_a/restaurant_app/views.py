@@ -307,17 +307,17 @@ def user_registration(request):
             ok = False
         if ok:
             try:
-               user = user_creation_form.save()
-               profile = profile_form.save(commit=False)
-               profile.user = user
-               profile.save()
-               return redirect('home')
+                users = user_creation_form.save()
+                profile = profile_form.save(commit=False)
+                profile.user = users
+                profile.save()
+                return redirect('restaurant_app:login')
             except:
                 return render_to_response("registration/create_user.html",
                                       {'u_form': UserCreationForm, 'p_form': ProfileForm},
                                       context_instance=RequestContext(request))
     return render_to_response("registration/create_user.html",
-                                  {'u_form': UserCreationForm(), 'p_form': ProfileForm()},
+                                  {'u_form': UserCreationForm, 'p_form': ProfileForm},
                                   context_instance=RequestContext(request))
 
 
