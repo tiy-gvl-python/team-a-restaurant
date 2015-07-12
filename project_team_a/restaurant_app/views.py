@@ -106,8 +106,12 @@ class ItemUpdateView(UpdateView):
     template = "item_update"
     success_url = reverse_lazy('restaurant_app:item_list')
 
-    @method_decorator(login_required(redirect_field_name='restaurant_app:login'))
+    @method_decorator(user_passes_test(owner_wrapper_func,
+                                       redirect_field_name='restaurant_app:denied',
+                                       login_url='restaurant_app:denied',
+                                       ))
     def dispatch(self, *args, **kwargs):
+        print("user passed test", owner_wrapper_func)
         return super().dispatch(*args, **kwargs)
 
 class CategoryListView(ListView):
@@ -119,8 +123,13 @@ class CategoryCreateView(CreateView):
     model = Category
     fields = ['name', 'items']
     success_url = reverse_lazy('restaurant_app:category_form')
-    @method_decorator(login_required(redirect_field_name='restaurant_app:login'))
+
+    @method_decorator(user_passes_test(owner_wrapper_func,
+                                       redirect_field_name='restaurant_app:denied',
+                                       login_url='restaurant_app:denied',
+                                       ))
     def dispatch(self, *args, **kwargs):
+        print("user passed test", owner_wrapper_func)
         return super().dispatch(*args, **kwargs)
 
 
@@ -128,8 +137,12 @@ class CategoryDeleteView(DeleteView):
     model = Category
     success_url = reverse_lazy('restaurant_app:category_list')
 
-    @method_decorator(login_required(redirect_field_name='restaurant_app:login'))
+    @method_decorator(user_passes_test(owner_wrapper_func,
+                                       redirect_field_name='restaurant_app:denied',
+                                       login_url='restaurant_app:denied',
+                                       ))
     def dispatch(self, *args, **kwargs):
+        print("user passed test", owner_wrapper_func)
         return super().dispatch(*args, **kwargs)
 
 
@@ -139,8 +152,12 @@ class CategoryUpdateView(UpdateView):
     template = "update_category.html"
     success_url = reverse_lazy('restaurant_app:category_list')
 
-    @method_decorator(login_required(redirect_field_name='restaurant_app:login'))
+    @method_decorator(user_passes_test(owner_wrapper_func,
+                                       redirect_field_name='restaurant_app:denied',
+                                       login_url='restaurant_app:denied',
+                                       ))
     def dispatch(self, *args, **kwargs):
+        print("user passed test", owner_wrapper_func)
         return super().dispatch(*args, **kwargs)
 
 class MenuListView(ListView):
@@ -152,8 +169,12 @@ class MenuCreateView(CreateView):
     fields = ['categories', 'display', 'name']
     success_url = reverse_lazy('restaurant_app:menu_form')
 
-    @method_decorator(login_required(redirect_field_name='restaurant_app:login'))
+    @method_decorator(user_passes_test(owner_wrapper_func,
+                                       redirect_field_name='restaurant_app:denied',
+                                       login_url='restaurant_app:denied',
+                                       ))
     def dispatch(self, *args, **kwargs):
+        print("user passed test", owner_wrapper_func)
         return super().dispatch(*args, **kwargs)
 
 
@@ -161,8 +182,12 @@ class MenuDeleteView(DeleteView):
     model = Menu
     success_url = reverse_lazy('restaurant_app:menu_list')
 
-    @method_decorator(login_required(redirect_field_name='restaurant_app:login'))
+    @method_decorator(user_passes_test(owner_wrapper_func,
+                                       redirect_field_name='restaurant_app:denied',
+                                       login_url='restaurant_app:denied',
+                                       ))
     def dispatch(self, *args, **kwargs):
+        print("user passed test", owner_wrapper_func)
         return super().dispatch(*args, **kwargs)
 
 
@@ -172,8 +197,12 @@ class MenuUpdateView(UpdateView):
     template = "update_menu.html"
     success_url = reverse_lazy('restaurant_app:menu_list')
 
-    @method_decorator(login_required(redirect_field_name='restaurant_app:login'))
+    @method_decorator(user_passes_test(owner_wrapper_func,
+                                       redirect_field_name='restaurant_app:denied',
+                                       login_url='restaurant_app:denied',
+                                       ))
     def dispatch(self, *args, **kwargs):
+        print("user passed test", owner_wrapper_func)
         return super().dispatch(*args, **kwargs)
 
 
