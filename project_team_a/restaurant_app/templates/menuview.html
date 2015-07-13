@@ -24,7 +24,7 @@
 <div class="container" align="center">
 <ul class="nav nav-pills" style="align:center;">
     {% for menu in menus %}
-    <li role="presentation" class="active"><a href="{% url 'restaurant_app:menu' menu.id %}">{{ menu.name }}</li></a>
+    <li role="presentation" class="active"><a href="{% url 'restaurant_app:viewmenu' menu.id %}"> {{ menu.name }}</li></a>
     {% endfor %}
 </ul></div>
 <br/>
@@ -45,14 +45,7 @@
             <div class="panel-body" align="center">
                 {% with citems|index:c as item %}
              {% for pitem in item %}
-                {{pitem.name}} {{pitem.price}}{% if user.id %}{% if not order.submit or not order.submit and not order.completed %}
-                <form action="{% url 'restaurant_app:addtoorder' pitem.id %}" method="POST">
-                    {% csrf_token %}
-                    <input type="hidden" id="menu" name="menu" value="{{ id }}"/>
-                    <input type="number" min="1" id="count" name="count" value="1"/>
-                    <input id="submit" type="submit" value="Add to Cart" />
-                </form>
-                {% endif %}{% endif %}
+                {{pitem.name}} {{pitem.price}}
               {% endfor %}
                 {% endwith %}
 

@@ -123,7 +123,8 @@ def cart(requests):
         order.save()
         context['status'] = "Cart is empty"
     else:
-        context['status'] = "Order is being proccessed: Call Here"
+        context['status'] = "Order is being proccessed: Call 864-252-5185 to check on the status of your order"
+        context['state'] = 1
     return render_to_response("cart.html", context, context_instance=RequestContext(requests))
 
 
@@ -166,6 +167,45 @@ def menu(requests, id):
         context['index'] = -1
     context["menus"] = menu_act
     return render_to_response("menuchoice.html",
+                              context,
+                              context_instance=RequestContext(requests))
+
+def menuview(requests, id):
+    context = {}
+    menu_act = Menu.objects.filter(display=True)
+    print(int(id))
+    if int(id):
+        print("RUNNING")
+        categories = []
+        category_items = []
+        items = []
+        menu = Menu.objects.get(id=id, display=True)
+        cate = menu.categories.all()
+        for ca in cate:
+            if items:
+                print("Items", items)
+                category_items.append(items)
+                items = []
+            categories.append(ca)
+            for item in ca.items.all():
+                print("Item", item)
+                items.append(item)
+            print("Items list", items)
+        if items:
+            print("Items", items)
+            category_items.append(items)
+            print("Category", categories,"Category Items", category_items)
+        print(menu)
+        context['catmenu'] = menu
+        context["cate"] = categories
+        context["id"] = id
+        context["citems"] = category_items
+        context["index"] = range(len(cate))
+        print("Dictionary", context)
+    else:
+        context['index'] = -1
+    context["menus"] = menu_act
+    return render_to_response("menuview.html",
                               context,
                               context_instance=RequestContext(requests))
 
