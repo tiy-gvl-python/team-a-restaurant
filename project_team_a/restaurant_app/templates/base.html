@@ -31,31 +31,11 @@
     </style>
 
 
-<!--<div class="container" align="center">
-<ul class="nav nav-pills" style="align:center;">
-    <li role="presentation" class="active"><a href="{% url 'restaurant_app:home' %}">Home</a></li>
-    <li role="presentation" class="active"><a href="{% url 'restaurant_app:menu' 0 %}">Menu</a></li>
-    <li role="presentation" class="active"><a href="/">Home</a></li>
-    <li role="presentation" class="active"><a href="{% url 'restaurant_app:cart' %}">New Order</a></li>
-</ul></div>
-{% if user.profile.owner %}
-    <div class="container" align="center">
-<ul class="nav nav-pills" style="align:center;">
-    <h1>Admin Bar</h1>
-    <li role="presentation" class="active"><a href="{% url 'restaurant_app:item_form' %}">Create Item</a></li>
-    <li role="presentation" class="active"><a href="{% url 'restaurant_app:item_list' %}">List Item</a></li>
-    <li role="presentationAddass="acstive"><a h{% url 'restausrant_app:category_list' %}">Categories</a></li>
-    <li role="presentation" class="active"><a href="{% url 'restausrant_app:menu_form' %}">Add Menu</a></li>
-    <li role="presentation" class="active"><a href="{% url 'restaurant_app:menu_list' %}">Menus</a></li>
-    <li role="presentation" class="active"><a href="{% url 'restaurant_app:comment_form' %}">Add Comment</a></li>
-    <li role="presentation" class="active"><a href="{% url 'restaurant_app:comment_list' %}">Customer Comments</a></li>
-
-</ul></div>
-    {% endif %}
-</ul>-->
 
 
-
+<html>
+	<head>
+		<title>Restaurant</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
         <!--[if lte IE 8]><script src="{% static 'assets/js/ie/html5shiv.js' %}"></script><![endif]-->
@@ -82,14 +62,37 @@
 						<!-- Nav -->
 							<nav id="nav">
 								<ul>
+                                    {% if user.profile.owner %}
+                                    <li>
+                                    Admin Create
+										<ul>
+											<li><a href="{% url 'restaurant_app:menu_form' %}">Create Menu</a></li>
+											<li><a href="{% url 'restaurant_app:category_form' %}">Create Category</a></li>
+											<li><a href="{% url 'restaurant_app:item_form' %}">Item Create</a></li>
+								</ul>
+                                    </li>
+                                        {% endif %}
 									<li>
 										<a href="{% url 'restaurant_app:cart' %}">New Order</a>
 									</li>
 									<li><a href="{% url 'restaurant_app:menu' 0 %}">Menu</a></li>
 									<li class="break"><a href="right-sidebar.html">Comment</a></li>
 									<li><a href="{% url 'restaurant_app:cart' %}">Cart</a></li>
+                                    {% if user.profile.owner %}
+                                    <li>
+                                    Admin Lists
+										<ul>
+											<li><a href="{% url 'restaurant_app:menu_list' %}">Menu List</a></li>
+											<li><a href="{% url 'restaurant_app:category_list' %}">Category List</a></li>
+											<li><a href="{% url 'restaurant_app:item_list' %}">Item List</a></li>
 								</ul>
+                                    </li>
+                                        {% endif %}
+                                    </ul>
 							</nav>
+
+
+
 {% if user.id %}
 
     <h1>Welcome {{ user.username }}</h1>

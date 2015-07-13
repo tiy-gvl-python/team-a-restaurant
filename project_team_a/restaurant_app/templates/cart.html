@@ -18,12 +18,13 @@
     </form>
             {% endfor %}
         </div>
-
-    <form method="POST" action="checkout">
-        {% csrf_token %}
-        <input type="hidden" id="order" name="order" value="{{ order }}"/>
-        <button type="submit">Checkout</button>
-    </form>
+    {% if order.item %}
+        <form method="POST" action="checkout">
+            {% csrf_token %}
+            <input type="hidden" id="order" name="order" value="{{ order }}"/>
+            <button type="submit">Checkout</button>
+        </form>
+    {% endif %}
 
     <form method="POST" action="{% url 'restaurant_app:menu' 0 %}">
         {% csrf_token %}
