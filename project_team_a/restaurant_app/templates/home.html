@@ -1,19 +1,46 @@
 {% extends 'base.html' %}
 
 <!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
-</head>
+<html>{% block head %}
+{% endblock %}
+
 
 {% block body %}
-<body>
-<!--<div class="jumbotron">
-  <h1>You Like Food?</h1>
-  <p>...</p>
-  <p><a class="btn btn-primary btn-lg" href="#" role="button">This Button Does Nothing</a></p>
-</div>-->
+    <body>
+        <section id="hero" class="container">
+        <header>
+            <h2>Welcome to our Restaurant App!
+            <br />
+            </h2>
+        </header>
+            <p><strong>Bekk Blando, Jeff Hacker, Lance Rogers, Paul Nitto</strong>
+        <br />
+                </p>
+                <ul class="actions">
+                <a href="{% url 'restaurant_app:menu' 0 %}" class="button"><strong>Restaurant Menu</strong></a>
+                    </ul>
+        </section>
+        <section>
+                <body class="footer-wrapper">
+					<div id="footer" class="container">
+
+                    </div>
+                </body>
+        </section>
+        <section><div>
+						<ul class="menu">
+							<li><a href="{% url 'restaurant_app:activate' %}">Activate</a></li>
+						</ul>
+					</div>
+
+</section>
+
+
+
+
+
+
 </body>
 {% endblock %}
 </html>
+<html>
