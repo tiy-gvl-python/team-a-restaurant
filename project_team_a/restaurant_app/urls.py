@@ -3,7 +3,7 @@ from .views import home, menu, ItemCreateView, ItemDeleteView, ItemListView, Ite
     CategoryListView, CategoryCreateView, CategoryDeleteView, CategoryUpdateView, MenuListView, MenuCreateView, \
     MenuDeleteView, MenuUpdateView,  user_registration, addtoorder, cart, \
     activate_work, activate, permission_denied, removefromorder, checkout, order, ordercomplete, ordersubmit, \
-    CommentCreateView, CommentDeleteView, CommentListView, CommentUpdateView, AdminCommentListView
+    CommentCreateView, CommentDeleteView, CommentListView, CommentUpdateView, AdminCommentListView, menuview
 
 from django.contrib.auth.views import login, logout
 
@@ -20,6 +20,7 @@ urlpatterns = [
     url(r'^cart', cart, name="cart"),
     url(r'^logout/', logout, {'next_page': '/'}, name="logout"),
     url(r'^registration/', user_registration, name="user_registration"),
+    url(r'^viewmenu(?P<id>\d+)/', menuview, name="viewmenu"),
     url(r'^menu(?P<id>\d+)/', menu, name="menu"),
     url(r'^item_form/', ItemCreateView.as_view(), name="item_form"),
     url(r'^item_list/', ItemListView.as_view(template="item_list.html"), name="item_list"),
