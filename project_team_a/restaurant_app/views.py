@@ -7,7 +7,7 @@ from .models import Item, Category, Menu, Profile, Order, Count, Comment
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic.edit import FormView
 from django.template import RequestContext
-from .forms import ProfileForm
+from .forms import ProfileForm, ProfileEditForm
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required, user_passes_test
 from .custom_wrappers import staff_wrapper_func, customer_wrapper_func, owner_wrapper_func
@@ -406,3 +406,41 @@ def user_registration(request):
 def permission_denied(requests):
     return render_to_response("restaurant_app/permission_denied.html",
                               context_instance=RequestContext(requests))
+
+
+@login_required
+def activate_work(request):
+    user_id = request.user.id
+    user = User.objects.get(id=user_id)
+    print(user)
+    print(request.POST['code'])
+    staff = 'staff'
+    owner = 'owner'
+    context = {}
+    print('I am at the input')
+    if request.POST:
+        print('hey I dont work')
+        x = request.POST['code']
+        print(x)
+        print('I am at the first if statement')
+        profile = Profile.objects.get(user=user)
+        if x == staff:
+            profile.staff = True
+            profile.save()
+            print('staff')
+            return redirect('restaurant_app:home')
+        if x == owner:
+            profile.owner = True
+            profile.save()
+            print('owner')
+            return redirect('restaurant_app:home')
+        if x != owner and x != staff:
+            return redirect('restaurant_app:denied')
+        profile.save()
+        context['profile'] = profile
+    return render_to_response("registration/add_permissions.html", context_instance=RequestContext(request))
+
+
+@login_required
+def activate(request):
+    return render_to_response("registration/add_permissions.html", context_instance=RequestContext(request))
