@@ -6,22 +6,37 @@
 
 
 {% block body %}
-<body>
-			<section id="hero" class="container">
-<header>
-								<h2>Welcome to our Restaurant App!
-								<br />
-								</h2>
-							</header>
-							<p><strong>Bekk Blando, Jeff Hacker, Lance Rogers, Paul Nitto</strong>
-							<br />
-							</p>
-                            <ul class="actions">
-                                <a href="{% url 'restaurant_app:menu' 0 %}" class="button"><strong>Restaurant Menu</strong></a>
+    <body>
+        <section id="hero" class="container">
+        <header>
+            <h2>Welcome to our Restaurant App!
+            <br />
+            </h2>
+        </header>
+            <p><strong>Bekk Blando, Jeff Hacker, Lance Rogers, Paul Nitto</strong>
+        <br />
+                </p>
+                <ul class="actions">
+                <a href="{% url 'restaurant_app:menu' 0 %}" class="button"><strong>Restaurant Menu</strong></a>
+                    </ul>
+        </section>
+        <section>
+                <body class="footer-wrapper">
+					<div id="footer" class="container">
+
+                    </div>
+                </body>
+        </section>
+        <section><div>
+						<ul class="menu">
+							<li><a href="/google.com/">Activate</a></li>
 						</ul>
-            </section>
-        </div>
-    </div>
+					</div>
+
+</section>
+
+
+
 
 
 
