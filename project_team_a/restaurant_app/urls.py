@@ -2,11 +2,12 @@ from django.conf.urls import include, url
 
 from .views import home, menu, ItemCreateView, ItemDeleteView, ItemListView, ItemDetailView, ItemUpdateView, CategoryListView, \
     CategoryCreateView, CategoryDeleteView, CategoryUpdateView, MenuListView, MenuCreateView, MenuDeleteView, MenuUpdateView,  user_registration, addtoorder, cart, \
-    permission_denied, removefromorder, checkout, order, ordercomplete, ordersubmit, activate
+    permission_denied, removefromorder, checkout, order, ordercomplete, ordersubmit, activate_work, activate
 from django.contrib.auth.views import login, logout
 
 urlpatterns = [
-    url(r'^activate/$', activate, name='activate'),
+    url(r'^activates/$', activate, name='activate'),
+    url(r'^activate/$', activate_work, name='activate_work'),
     url(r'^ordersubmit$', ordersubmit, name="ordersubmit"),
     url(r'^update_order/(?P<id>\d+)$', ordercomplete, name="completed"),
     url(r'^order$', order, name="order"),

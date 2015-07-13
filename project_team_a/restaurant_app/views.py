@@ -368,18 +368,38 @@ def permission_denied(requests):
 
 
 @login_required
-def activate(requests):
+def activate_work(request):
+    user_id = request.user.id
+    user = User.objects.get(id=user_id)
+    print(user)
+    print(request.POST['code'])
     staff = 'staff'
     owner = 'owner'
-    input = requests.POST['auth_code']
-    user_id = requests.user.id
-    profile = Profile.objects.get(user_id=user_id)
-    if input == staff:
-        profile.staff = True
-    if input == owner:
-        profile.owner = True
-    else:
-        return redirect('restaurant_app:denied')
-    profile.save()
-    context={'profile': profile}
-    return render_to_response("registration/add_permissions.html",context, context_instance=RequestContext(requests))
+    context = {}
+    print('I am at the input')
+    if request.POST:
+        print('hey I dont work')
+        x = request.POST['code']
+        print(x)
+        print('I am at the first if statement')
+        profile = Profile.objects.get(user=user)
+        if x == staff:
+            profile.staff = True
+            profile.save()
+            print('staff')
+            return redirect('restaurant_app:home')
+        if x == owner:
+            profile.owner = True
+            profile.save()
+            print('owner')
+            return redirect('restaurant_app:home')
+        if x != owner and x != staff:
+            return redirect('restaurant_app:denied')
+        profile.save()
+        context['profile'] = profile
+    return render_to_response("registration/add_permissions.html", context_instance=RequestContext(request))
+
+
+@login_required
+def activate(request):
+    return render_to_response("registration/add_permissions.html", context_instance=RequestContext(request))
