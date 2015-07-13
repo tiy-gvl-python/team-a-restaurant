@@ -49,7 +49,7 @@
                 <form action="{% url 'restaurant_app:addtoorder' pitem.id %}" method="POST">
                     {% csrf_token %}
                     <input type="hidden" id="menu" name="menu" value="{{ id }}"/>
-                    <input type="number" min="1" id="count" name="count" value="1"/>
+                    <input type="number" min="1" id="count" name="count" value=1 />
                     <input id="submit" type="submit" value="Add to Cart" />
                 </form>
                 {% endif %}{% endif %}

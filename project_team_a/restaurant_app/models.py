@@ -14,11 +14,8 @@ class Order(models.Model):
         pass
 
     def __str_(self):
-        return "{}-{}-{}-{}-{}".format(self.items,
-                                      self.user,
-                                      self.timestamp,
-                                      self.completed,
-                                      self.submit)
+        return "Order for {}".format(self.user)
+
 class Count(models.Model):
     item = models.ForeignKey("Item")
     order = models.ForeignKey(Order)
@@ -44,7 +41,7 @@ class Category(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return "{}-{}-{}".format(self.items, self.name, self.timestamp)
+        return "{}".format(self.name)
 
 class Menu(models.Model):
     categories = models.ManyToManyField(Category)
