@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, render_to_response, redirect
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView
-from .models import Item, Category, Menu, Profile, Order, Count
+from .models import Item, Category, Menu, Profile, Order, Count, Comment
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic.edit import FormView
 from django.template import RequestContext
@@ -334,6 +334,47 @@ class MenuUpdateView(UpdateView):
     def dispatch(self, *args, **kwargs):
         print("user passed test", owner_wrapper_func)
         return super().dispatch(*args, **kwargs)
+
+
+class UserRegistration(FormView):
+    #model = Profile
+    pass
+
+
+# comment section
+class CommentCreateView(CreateView): #comment customer view
+    model = Comment
+    success_url = reverse_lazy('restaurant_app:comment_list')
+    fields = ['comment', 'recommend']
+
+    def form_valid(self, form):
+        form.instance.user = Profile.objects.get(user=self.request.user)
+        return super().form_valid(form)
+
+
+class CommentDeleteView(DeleteView):
+    model = Comment
+    success_url = reverse_lazy('restaurant_app:admin_comment_list')
+
+
+class CommentUpdateView(UpdateView):
+    model = Comment
+    fields = ['user', 'comment', 'recommend']
+    success_url = reverse_lazy('restaurant_app:admin_comment_list')
+
+class AdminCommentListView(ListView):
+    model = Comment
+    success_url = reverse_lazy('restaurant_app:admin_comment_list')
+    template = "admin_comment_list.html"
+
+
+class CommentListView(ListView):
+    model = Comment
+    success_url = reverse_lazy('restaurant_app:comment_list')
+    template = "comment_list.html"
+
+
+# end comment section
 
 
 # Pj helped me get out of a whole

@@ -1,6 +1,4 @@
 from __future__ import unicode_literals
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.views import login
 from .models import Profile
 from django import forms
 

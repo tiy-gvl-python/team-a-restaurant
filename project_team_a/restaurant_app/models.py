@@ -79,15 +79,18 @@ class Profile(models.Model):
         verbose_name = 'id'
         verbose_name_plural = 'id'
 
+    def __str__(self):
+        return "{}".format(self.user)
 # default user.customer is set to True for MVP and authentiction
 
+class Comment(models.Model):
+    user = models.ForeignKey(Profile)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    comment = models.CharField(max_length=300)
+    recommend = models.BooleanField(default=True)
 
+    def __str__(self):
+        return "{}".format(self.user)
 
-
-
-
-
-
-
-
-
+    class Meta: #thank you Paul and Joel (displays comments newest first
+        ordering = ["-timestamp"]
