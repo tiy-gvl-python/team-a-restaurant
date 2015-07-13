@@ -2,8 +2,8 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
-import django.core.validators
 from django.conf import settings
+import django.core.validators
 
 
 class Migration(migrations.Migration):
@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Category',
             fields=[
-                ('id', models.AutoField(auto_created=True, verbose_name='ID', primary_key=True, serialize=False)),
+                ('id', models.AutoField(primary_key=True, auto_created=True, verbose_name='ID', serialize=False)),
                 ('name', models.CharField(max_length=30)),
                 ('timestamp', models.DateTimeField(auto_now_add=True)),
             ],
@@ -24,15 +24,15 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Click',
             fields=[
-                ('id', models.AutoField(auto_created=True, verbose_name='ID', primary_key=True, serialize=False)),
+                ('id', models.AutoField(primary_key=True, auto_created=True, verbose_name='ID', serialize=False)),
                 ('timestamp', models.DateTimeField(auto_now_add=True)),
-                ('category', models.ForeignKey(null=True, to='restaurant_app.Category')),
+                ('category', models.ForeignKey(to='restaurant_app.Category', null=True)),
             ],
         ),
         migrations.CreateModel(
             name='Comment',
             fields=[
-                ('id', models.AutoField(auto_created=True, verbose_name='ID', primary_key=True, serialize=False)),
+                ('id', models.AutoField(primary_key=True, auto_created=True, verbose_name='ID', serialize=False)),
                 ('timestamp', models.DateTimeField(auto_now_add=True)),
                 ('comment', models.CharField(max_length=300)),
                 ('recommend', models.BooleanField(default=True)),
@@ -44,14 +44,14 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Count',
             fields=[
-                ('id', models.AutoField(auto_created=True, verbose_name='ID', primary_key=True, serialize=False)),
+                ('id', models.AutoField(primary_key=True, auto_created=True, verbose_name='ID', serialize=False)),
                 ('count', models.IntegerField()),
             ],
         ),
         migrations.CreateModel(
             name='Item',
             fields=[
-                ('id', models.AutoField(auto_created=True, verbose_name='ID', primary_key=True, serialize=False)),
+                ('id', models.AutoField(primary_key=True, auto_created=True, verbose_name='ID', serialize=False)),
                 ('name', models.CharField(max_length=100)),
                 ('price', models.DecimalField(decimal_places=2, validators=[django.core.validators.MinValueValidator(0.0)], max_digits=12)),
                 ('timestamp', models.DateTimeField(auto_now_add=True)),
@@ -61,7 +61,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Menu',
             fields=[
-                ('id', models.AutoField(auto_created=True, verbose_name='ID', primary_key=True, serialize=False)),
+                ('id', models.AutoField(primary_key=True, auto_created=True, verbose_name='ID', serialize=False)),
                 ('display', models.BooleanField()),
                 ('timestamp', models.DateTimeField(auto_now_add=True)),
                 ('name', models.CharField(max_length=30)),
@@ -71,26 +71,26 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Order',
             fields=[
-                ('id', models.AutoField(auto_created=True, verbose_name='ID', primary_key=True, serialize=False)),
+                ('id', models.AutoField(primary_key=True, auto_created=True, verbose_name='ID', serialize=False)),
                 ('timestamp', models.DateTimeField(auto_now_add=True)),
                 ('completed', models.BooleanField()),
                 ('submit', models.BooleanField()),
-                ('items', models.ManyToManyField(through='restaurant_app.Count', to='restaurant_app.Item')),
+                ('items', models.ManyToManyField(to='restaurant_app.Item', through='restaurant_app.Count')),
             ],
         ),
         migrations.CreateModel(
             name='Profile',
             fields=[
-                ('id', models.AutoField(auto_created=True, verbose_name='ID', primary_key=True, serialize=False)),
+                ('id', models.AutoField(primary_key=True, auto_created=True, verbose_name='ID', serialize=False)),
                 ('phone', models.CharField(max_length=17)),
                 ('staff', models.BooleanField(default=False)),
                 ('customer', models.BooleanField(default=True)),
                 ('owner', models.BooleanField(default=False)),
-                ('user', models.OneToOneField(null=True, to=settings.AUTH_USER_MODEL)),
+                ('user', models.OneToOneField(to=settings.AUTH_USER_MODEL, null=True)),
             ],
             options={
-                'verbose_name': 'id',
                 'verbose_name_plural': 'id',
+                'verbose_name': 'id',
                 'ordering': ['id'],
             },
         ),
@@ -117,12 +117,12 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='click',
             name='item',
-            field=models.ForeignKey(null=True, to='restaurant_app.Item'),
+            field=models.ForeignKey(to='restaurant_app.Item', null=True),
         ),
         migrations.AddField(
             model_name='click',
             name='menu',
-            field=models.ForeignKey(null=True, to='restaurant_app.Menu'),
+            field=models.ForeignKey(to='restaurant_app.Menu', null=True),
         ),
         migrations.AddField(
             model_name='category',
