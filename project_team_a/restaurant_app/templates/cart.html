@@ -18,7 +18,7 @@
     </form>
             {% endfor %}
         </div>
-    {% if order.item %}
+    {% if order %}
         <form method="POST" action="checkout">
             {% csrf_token %}
             <input type="hidden" id="order" name="order" value="{{ order }}"/>

@@ -14,11 +14,8 @@ class Order(models.Model):
         pass
 
     def __str_(self):
-        return "{}-{}-{}-{}-{}".format(self.items,
-                                      self.user,
-                                      self.timestamp,
-                                      self.completed,
-                                      self.submit)
+        return "Order for {}".format(self.user)
+
 class Count(models.Model):
     item = models.ForeignKey("Item")
     order = models.ForeignKey(Order)
